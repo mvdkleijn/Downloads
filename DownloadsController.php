@@ -8,7 +8,7 @@ class DownloadsController extends PluginController {
 	}
 	
 	public function index() {
-		$this->display('downloads/views/backend/index');
+		$this->display('downloads/views/backend/dashboard');
 	}
 
 	public function settings($id) {
@@ -27,10 +27,6 @@ class DownloadsController extends PluginController {
 				)
 			);
 		}
-	}
-
-	public function add($id) {
-		$this->display('downloads/views/backend/viewDownload', array('id' => $id));
 	}
 
 	public function categories($id) {
@@ -71,7 +67,7 @@ class DownloadsController extends PluginController {
 				redirect(get_url('plugin/downloads/categories'));	
 			}
 		} else {
-			$this->display('downloads/views/backend/viewCategories',
+			$this->display('downloads/views/backend/categories',
 				array(
 					'id' => $id,
 					'categories' => new DownloadCategoryManager(),
@@ -81,6 +77,40 @@ class DownloadsController extends PluginController {
 		}
 	}
 
+	public function files($id) {
+		if($id == '') {
+			$this->display('downloads/views/backend/dashboard');
+		}
+		elseif($id == 'edit') {
+			//edit
+		}
+		elseif($id == 'addFile') {
+			$fileManager = new DownloadFileManager();
+			$fileManager = $fileManager->addFile($_POST);
+			if($fileManager == TRUE) {
+				Flash::set('success', __('You File has been added.'));
+				redirect(get_url('plugin/downloads/files'));	
+			}
+			else {
+				Flash::set('error', __('There was a problem adding this file. Please try again'));
+				redirect(get_url('plugin/downloads/files'));	
+			}
+		}
+		else {
+			$categories = new DownloadCategoryManager();
+			$categories = $categories->getCategories();
+			$downloadInfo = new DownloadFileManager();
+			$downloadInfo = $downloadInfo->getDownloadInfo($id);
+			$this->display('downloads/views/backend/downloads',
+				array(
+					'id' => $id,
+					'categories' => $categories,
+					'downloadInfo' => $downloadInfo,
+					'url' => get_url('plugin/downloads/files/')
+				)
+			);
+		}
+	}
 
 
 

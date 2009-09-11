@@ -7,12 +7,22 @@ Plugin::setInfos(array(
 	'version'     => '1.0'
 ));
 
-include('models/DownloadManager.php');
+
+include('models/FileManager.php');
 include('models/CategoryManager.php');
 include('models/HistoryManager.php');
 include('models/SettingsManager.php');
 
+
 Plugin::addController('downloads', 'Downloads', 'developer,administrator,editor', TRUE);
+
+
+
+
+
+
+
+
 
 function downloaddoc() {
 

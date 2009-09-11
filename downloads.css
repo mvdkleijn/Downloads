@@ -2,3 +2,12 @@ body#body_plugin_downloads table.fieldset tr td.field {
 	padding-top: 0.6em;
 	vertical-align: top;
 }
+
+body#body_plugin_downloads table.fieldset tr td.help {
+	padding-top: 0.8em;
+	vertical-align: top;
+}
+
+body#body_plugin_downloads textarea.textbox {
+	height: 100px;
+}

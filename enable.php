@@ -43,14 +43,16 @@
 					`download_id` int(11) NOT NULL auto_increment,
 					`name` varchar(128) default NULL,
 					`description` varchar(1024) default NULL,
-					`downloads` int(11) default NULL,
+					`downloads` int(11) default '0',
 					`category` int(11) default NULL,
 					`published` enum ('yes', 'no'),
 					`available` enum ('yes', 'no'),
 					`require_login` enum ('yes', 'no'),
 					`require_password` enum ('yes', 'no'),
 					`password` varchar(128) default NULL,
-					`extension` varchar(16) default NULL,
+					`filetype` varchar(16) default NULL,
+					`extension` varchar(11) default NULL,
+					`filesize` varchar(16) default NULL,
 					PRIMARY KEY (`download_id`)
 				) AUTO_INCREMENT=0
 			";

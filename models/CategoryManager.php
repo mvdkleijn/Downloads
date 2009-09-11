@@ -26,6 +26,7 @@ class DownloadCategoryManager {
 	}
 
 	function addCategory() {
+		if($_POST['name'] == '' ) { return FALSE; exit(); }
 		$sql = "INSERT INTO ".TABLE_PREFIX."download_categories
 				VALUES(
 					'',

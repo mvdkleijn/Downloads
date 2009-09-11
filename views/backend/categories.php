@@ -46,7 +46,7 @@
 		</tr>
 		<tr>
 			<td class="label">Description</td>
-			<td class="field"><textarea name="description"><?php echo $category['description']; ?></textarea></td>
+			<td class="field"><textarea name="description" class="textbox"><?php echo $category['description']; ?></textarea></td>
 			<td class="help">This is a description for the category, which may be useful for the frontend. <strong>No HTML please.</strong></td>
 		</tr>
 		<tr>
