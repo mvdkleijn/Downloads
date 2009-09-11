@@ -1,0 +1,4 @@
+body#body_plugin_downloads table.fieldset tr td.field {
+	padding-top: 0.6em;
+	vertical-align: top;
+}
