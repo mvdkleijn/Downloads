@@ -1,3 +1,12 @@
+<?php
+
+
+//		DO A CHECK FOR SETTINGS
+//			-> CHECK WRITE ACCESS TO DIRECTORIES
+
+
+?>
+
 <h1>Downloads list</h1>
 <table id="downloads-list" class="index" cellpadding="0" cellspacing="0" border="0">
 	<thead>

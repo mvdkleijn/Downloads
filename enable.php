@@ -26,8 +26,8 @@
 					VALUES
 						('downloads','active','1'),
 						('downloads','core_root','wolf'),
-						('downloads','download_path','SERVER_PATH_TO_DOWNLOADS_FOLDER'),
-						('downloads','download_url','YOUR_URL_TO_DOWNLOADS_FOLDER')
+						('downloads','download_path',''),
+						('downloads','download_url','')
 				;";
 	}
 	$pdo = $__CMS_CONN__->prepare($sql);

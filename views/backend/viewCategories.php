@@ -36,7 +36,7 @@
 		}
 ?>
 
-<form action="<?php echo $url .'/'. $action ?>" method="POST">
+<form action="<?php echo $url . $action ?>" method="POST">
 	<input name="id" value="<?php echo $category['category_id']; ?>" type="hidden" />
 	<table class="fieldset" id="downloads-categories-edit">
 		<tr>
@@ -51,7 +51,7 @@
 		</tr>
 		<tr>
 			<td class="label"></td>
-			<td class="field" colspan="2"><button id="Submit">Update</button> or <a href="<?php echo $url; ?>">cancel changes</a></td>
+			<td class="field" colspan="2"><button class="Submit">Update</button> or <a href="<?php echo $url; ?>">cancel changes</a></td>
 		</tr>
 	</table>
 </form>

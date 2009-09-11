@@ -11,10 +11,23 @@ class DownloadsController extends PluginController {
 		$this->display('downloads/views/backend/index');
 	}
 
-
-	/**
-		VIEW Controllers
-	**/
+	public function settings($id) {
+		if($id == 'update') {
+			$settingsManager = new DownloadSettingsManager();
+			$editSettings = $settingsManager->editSettings($_POST);
+			Flash::set('success', __('Your Settings have been updated.'));
+			redirect(get_url('plugin/downloads/settings'));	
+		}
+		else {
+			$settings = Plugin::getAllSettings('downloads');
+			$this->display('downloads/views/backend/settings',
+				array(
+					'settings' => $settings,
+					'url' => get_url('plugin/downloads/settings/')
+				)
+			);
+		}
+	}
 
 	public function add($id) {
 		$this->display('downloads/views/backend/viewDownload', array('id' => $id));
@@ -25,7 +38,7 @@ class DownloadsController extends PluginController {
 			$categoryManager = new DownloadCategoryManager();
 			$editCategory = $categoryManager->editCategory($_POST);
 			if($editCategory == TRUE) {
-				Flash::set('error', __('Your Category has been added.'));
+				Flash::set('success', __('Your Category has been edited.'));
 				redirect(get_url('plugin/downloads/categories'));	
 			}
 			else {
@@ -37,7 +50,7 @@ class DownloadsController extends PluginController {
 			$categoryManager = new DownloadCategoryManager();
 			$addCategory = $categoryManager->addCategory($_POST);
 			if($addCategory == TRUE) {
-				Flash::set('error', __('You Category has been added.'));
+				Flash::set('success', __('You Category has been added.'));
 				redirect(get_url('plugin/downloads/categories'));	
 			}
 			else {
@@ -59,9 +72,11 @@ class DownloadsController extends PluginController {
 			}
 		} else {
 			$this->display('downloads/views/backend/viewCategories',
-			array(	'id' => $id,
+				array(
+					'id' => $id,
 					'categories' => new DownloadCategoryManager(),
-					'url' => get_url('plugin/downloads/categories'))
+					'url' => get_url('plugin/downloads/categories/')
+				)
 			);
 		}
 	}

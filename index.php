@@ -10,6 +10,7 @@ Plugin::setInfos(array(
 include('models/DownloadManager.php');
 include('models/CategoryManager.php');
 include('models/HistoryManager.php');
+include('models/SettingsManager.php');
 
 Plugin::addController('downloads', 'Downloads', 'developer,administrator,editor', TRUE);
 
