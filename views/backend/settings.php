@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td colspan="2"><button class="submit">Save Settings</button> or <a href="<?php echo $url; ?>">cancel changes</a></td>
+			<td colspan="2"><button class="submit">Save Settings</button> or <a href="<?php echo str_replace('settings/', '', $url); ?>">cancel changes</a></td>
 		</tr>
 	</table>
 </form>
