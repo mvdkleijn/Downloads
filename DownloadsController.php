@@ -11,6 +11,78 @@ class DownloadsController extends PluginController {
 		$this->display('downloads/views/backend/index');
 	}
 
+
+	/**
+		VIEW Controllers
+	**/
+
+	public function add($id) {
+		$this->display('downloads/views/backend/viewDownload', array('id' => $id));
+	}
+
+	public function categories($id) {
+		if($id == 'edit') {
+			$categoryManager = new DownloadCategoryManager();
+			$editCategory = $categoryManager->editCategory($_POST);
+			if($editCategory == TRUE) {
+				Flash::set('error', __('Your Category has been added.'));
+				redirect(get_url('plugin/downloads/categories'));	
+			}
+			else {
+				Flash::set('error', __('There was a problem editing this category'));
+				redirect(get_url('plugin/downloads/categories'));	
+			}
+		}
+		elseif($id == 'addCategory') {
+			$categoryManager = new DownloadCategoryManager();
+			$addCategory = $categoryManager->addCategory($_POST);
+			if($addCategory == TRUE) {
+				Flash::set('error', __('You Category has been added.'));
+				redirect(get_url('plugin/downloads/categories'));	
+			}
+			else {
+				Flash::set('error', __('There was a problem adding this category'));
+				redirect(get_url('plugin/downloads/categories'));	
+			}
+		}
+		elseif($id == 'delete') {
+			$id = end(explode('/', $_SERVER['REQUEST_URI']));
+			$categoryManager = new DownloadCategoryManager();
+			$deleteCategory = $categoryManager->deleteCategory($id);
+			if($deleteCategory == TRUE) {
+				Flash::set('error', __('This category has been deleted.'));
+				redirect(get_url('plugin/downloads/categories'));	
+			}
+			else {
+				Flash::set('error', __('There was a problem deleting this category'));
+				redirect(get_url('plugin/downloads/categories'));	
+			}
+		} else {
+			$this->display('downloads/views/backend/viewCategories',
+			array(	'id' => $id,
+					'categories' => new DownloadCategoryManager(),
+					'url' => get_url('plugin/downloads/categories'))
+			);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	function remove($id) {
 		global $__CMS_CONN__;
 
@@ -32,10 +104,6 @@ class DownloadsController extends PluginController {
 
 		Flash::set('success', __(''.$name.' has been deleted.'));
 		redirect(get_url('plugin/downloads/index'));
-	}
-
-	public function add() {
-		$this->display('downloads/views/backend/add');
 	}
 
 	public function add_download() {
