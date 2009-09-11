@@ -69,7 +69,7 @@
 			<td class="field">
 				<select name="require_login">
 					<option value="yes"<?php if($download['require_login'] == 'yes') { echo ' selected="selected"'; } ?>>Yes</option>
-					<option value="no"<?php if($download['require_login'] == 'no') { echo ' selected="selected"'; } ?>>No</option>
+					<option value="no"<?php if($download['require_login'] == 'no' || $download['require_login'] != 'yes') { echo ' selected="selected"'; } ?>>No</option>
 				</select>
 			</td>
 			<td class="help">Should we request that users are logged in to download this file?</td>
@@ -79,7 +79,7 @@
 			<td class="field">
 				<select name="require_password">
 					<option value="yes"<?php if($download['require_password'] == 'yes') { echo ' selected="selected"'; } ?>>Yes</option>
-					<option value="no"<?php if($download['require_password'] == 'no') { echo ' selected="selected"'; } ?>>No</option>
+					<option value="no"<?php if($download['require_password'] == 'no' || $download['require_password'] != 'yes') { echo ' selected="selected"'; } ?>>No</option>
 				</select>
 			</td>
 			<td class="help">Do you want to password protect this file?</td>
