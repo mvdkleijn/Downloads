@@ -12,8 +12,8 @@
 <?php foreach($categories as $category) { ?>
 	<tbody>
 		<tr class="<?php echo odd_even(); ?>">
-			<td><a href="<?php echo $url .'/'. $category['category_id']; ?>"><?php echo $category['name']; ?></a></td>
-			<td rowspan="2"><a href="<?php echo $url .'/'. $category['category_id']; ?>">Edit</a> | <a href="<?php echo $url .'/delete/'. $category['category_id']; ?>" onClick="return confirm('Are you sure you want to delete this category?');">Delete</a></td>
+			<td><a href="<?php echo $url . $category['category_id']; ?>"><?php echo $category['name']; ?></a></td>
+			<td rowspan="2"><a href="<?php echo $url .''. $category['category_id']; ?>">Edit</a> | <a href="<?php echo $url .'/delete/'. $category['category_id']; ?>" onClick="return confirm('Are you sure you want to delete this category?');">Delete</a></td>
 		</tr>
 		<tr>
 			<td><small><?php echo $category['description']; ?></small></td>

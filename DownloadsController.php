@@ -84,8 +84,11 @@ class DownloadsController extends PluginController {
 		if($id == '') {
 			redirect(get_url('plugin/downloads/'));	
 		}
-		elseif($id == 'edit') {
-			//edit
+		elseif($id == 'editFile') {
+			$fileManager = new DownloadFileManager();
+			$editFile = $fileManager->editFile($_POST);
+			Flash::set('success', __('Your File has been edited.'));
+			redirect(get_url('plugin/downloads'));	
 		}
 		elseif($id == 'addFile') {
 			$fileManager = new DownloadFileManager();

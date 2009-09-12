@@ -53,7 +53,7 @@
 					`filetype` varchar(16) default NULL,
 					`extension` varchar(11) default NULL,
 					`filesize` varchar(16) default NULL,
-					`date_added` timestamp,
+					`date_added` int(16),
 					`added_by_id` int(11),
 					`added_by_name` varchar(128),
 					`date_publish` int(16),

@@ -9,12 +9,26 @@
 	$categoryList = implode(':!:!:', $categoryOuput);
 	$categoryList = str_replace(':!:!:', '', $categoryList);
 	if(is_numeric($id)) {
-		$action = 'edit/'.$id.'';
+		$action = 'editFile';
 		$fileHelp = 'Select a replacement File';
 	}
 	else {
 		$action = 'addFile';
 		$fileHelp = 'Choose the file you want to upload';
+	}
+
+	if(is_numeric($id)) {
+		echo '<p>Added by <a href="'.get_url('user/edit/'.$download['added_by_id'].'').'">'.$download['added_by_name'].'</a> on '.date('dS F, Y', $download['date_added']).'';
+		if($download['date_publish'] != '0') {
+			$publishDate		= date('Y-m-d', $download['date_publish']);
+			$publishTime		= date('G:i', $download['date_publish']);
+			$publishedArray		= explode(':', $publishTime);
+		}
+		if($download['date_unpublish'] != '0') {
+			$unPublishDate		= date('Y-m-d', $download['date_unpublish']);
+			$unPublishTime		= date('G:i', $download['date_unpublish']);
+			$unPublishedArray	= explode(':', $unPublishTime);
+		}
 	}
 
 ?>
@@ -58,7 +72,7 @@
 		<tr>
 			<td class="label">Future Publishing</td>
 			<td class="field">
-				<input maxlength="10" name="future_date" size="10" type="text" value="<?php echo $download['future_date'] ?>" /> 
+				<input maxlength="10" name="future_date" size="10" type="text" value="<?php echo $publishDate ?>" /> 
 				<img onclick="displayDatePicker('future_date');" src="images/icon_cal.gif" alt="Show Calendar" /> at 
 				<select name="future_hour">
 					<?php
@@ -69,7 +83,13 @@
 							if($hour < 10) {
 								$hour = '0' . $hour;
 							}
-							echo '<option value="'.$hour.'">'.$hour.'</option>';
+							if($hour == $publishedArray['0']) {
+								$selected = ' selected="selected"';
+							}
+							else {
+								$selected = '';
+							}
+							echo '<option value="'.$hour.'"'.$selected.'>'.$hour.'</option>';
 						}
 						while($hour <= 23);
 
@@ -84,7 +104,13 @@
 							if($minute < 10) {
 								$minute = '0' . $minute;
 							}
-							echo '<option value="'.$minute.'">'.$minute.'</option>';
+							if($minute == $publishedArray['1']) {
+								$selected = ' selected="selected"';
+							}
+							else {
+								$selected = '';
+							}
+							echo '<option value="'.$minute.'"'.$selected.'>'.$minute.'</option>';
 						}
 						while($minute <= 59);
 
@@ -96,7 +122,7 @@
 		<tr>
 			<td class="label">Future <strong>UN</strong>Publishing</td>
 			<td class="field">
-				<input maxlength="10" name="future_unpublish_date" size="10" type="text" value="<?php echo $download['future_unpublish_date'] ?>" /> 
+				<input maxlength="10" name="future_unpublish_date" size="10" type="text" value="<?php echo $unPublishDate ?>" /> 
 				<img onclick="displayDatePicker('future_unpublish_date');" src="images/icon_cal.gif" alt="Show Calendar" /> at 
 				<select name="future_un_hour">
 					<?php
@@ -107,7 +133,13 @@
 							if($hour < 10) {
 								$hour = '0' . $hour;
 							}
-							echo '<option value="'.$hour.'">'.$hour.'</option>';
+							if($hour == $unPublishedArray['0']) {
+								$selected = ' selected="selected"';
+							}
+							else {
+								$selected = '';
+							}
+							echo '<option value="'.$hour.'"'.$selected.'>'.$hour.'</option>';
 						}
 						while($hour <= 23);
 
@@ -122,7 +154,13 @@
 							if($minute < 10) {
 								$minute = '0' . $minute;
 							}
-							echo '<option value="'.$minute.'">'.$minute.'</option>';
+							if($minute == $unPublishedArray['1']) {
+								$selected = ' selected="selected"';
+							}
+							else {
+								$selected = '';
+							}
+							echo '<option value="'.$minute.'"'.$selected.'>'.$minute.'</option>';
 						}
 						while($minute <= 59);
 
@@ -167,7 +205,7 @@
 		</tr>
 		<tr>
 			<td class="label"></td>
-			<td class="field" colspan="2"><button id="download-add">Save this Download</button></td>
+			<td class="field" colspan="2"><button id="download-add">Save this Download</button> or <a href="<?php echo $url; ?>">cancel changes</a></td>
 		</tr>
 	</table>
 </form>
