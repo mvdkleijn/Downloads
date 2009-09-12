@@ -8,7 +8,9 @@ class DownloadsController extends PluginController {
 	}
 	
 	public function index() {
-		$this->display('downloads/views/backend/dashboard');
+		$downloadManager = new DownloadFileManager();
+		$downloads = $downloadManager->getAllDownloads();
+		$this->display('downloads/views/backend/dashboard', array('downloads' => $downloads));
 	}
 
 	public function settings($id) {
@@ -66,7 +68,8 @@ class DownloadsController extends PluginController {
 				Flash::set('error', __('There was a problem deleting this category'));
 				redirect(get_url('plugin/downloads/categories'));	
 			}
-		} else {
+		} 
+		else {
 			$this->display('downloads/views/backend/categories',
 				array(
 					'id' => $id,
@@ -79,7 +82,7 @@ class DownloadsController extends PluginController {
 
 	public function files($id) {
 		if($id == '') {
-			$this->display('downloads/views/backend/dashboard');
+			redirect(get_url('plugin/downloads/'));	
 		}
 		elseif($id == 'edit') {
 			//edit
@@ -89,13 +92,26 @@ class DownloadsController extends PluginController {
 			$fileManager = $fileManager->addFile($_POST);
 			if($fileManager == TRUE) {
 				Flash::set('success', __('You File has been added.'));
-				redirect(get_url('plugin/downloads/files'));	
+				redirect(get_url('plugin/downloads'));	
 			}
 			else {
 				Flash::set('error', __('There was a problem adding this file. Please try again'));
-				redirect(get_url('plugin/downloads/files'));	
+				redirect(get_url('plugin/downloads'));
 			}
 		}
+		elseif($id == 'delete') {
+			$id = end(explode('/', $_SERVER['REQUEST_URI']));
+			$downloadManager = new DownloadFileManager();
+			$deleteFile = $downloadManager->deleteFile($id);
+			if($deleteFile == TRUE) {
+				Flash::set('error', __('This file has been deleted.'));
+				redirect(get_url('plugin/downloads'));	
+			}
+			else {
+				Flash::set('error', __('There was a problem deleting this file'));
+				redirect(get_url('plugin/downloads'));	
+			}
+		} 
 		else {
 			$categories = new DownloadCategoryManager();
 			$categories = $categories->getCategories();
@@ -127,158 +143,10 @@ class DownloadsController extends PluginController {
 
 
 
-
-	function remove($id) {
-		global $__CMS_CONN__;
-
-		$sql = "SELECT * FROM ".TABLE_PREFIX."downloads WHERE id='".$id."'";
-		$pdo = $__CMS_CONN__->prepare($sql);
-		$pdo->execute();
-
-		while ($file = $pdo->fetchObject()) {
-			$name		= $file->name;
-			$extension	= $file->extension;
-		}
-
-		$oldfile = DOWNLOADS_DIRECTORY . $id . $extension;
-		unlink($oldfile);
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."downloads WHERE id='".$id."'";
-		$pdo = $__CMS_CONN__->prepare($sql);
-		$pdo->execute();
-
-		Flash::set('success', __(''.$name.' has been deleted.'));
-		redirect(get_url('plugin/downloads/index'));
-	}
-
-	public function add_download() {
-
-		global $__CMS_CONN__;
-		$name				= mysql_escape_string($_POST['name']);
-		$description		= mysql_escape_string($_POST['description']);
-		$category			= mysql_escape_string($_POST['category']);
-		$published			= mysql_escape_string($_POST['published']);
-
-		if(empty($_POST['name'])) {
-			Flash::set('error', __('You need to give your download a name!'));
-			redirect(get_url('plugin/downloads/add'));		
-		}
-
-		else {
-			$upload_dir			= DOWNLOADS_DIRECTORY . '/';
-			$upload_dir			= str_replace('//', '/', $upload_dir);
-			$upload_file		= $upload_dir . basename($_FILES['download_file']['name']);
-	
-			$upload_dir_tmp		= DOWNLOADS_DIRECTORY . '/tmp/';
-			$upload_dir_tmp		= str_replace('//', '/', $upload_dir_tmp);
-			$upload_file_tmp	= $upload_dir_tmp . basename($_FILES['download_file']['name']);
-
-			if (is_uploaded_file($_FILES['download_file']['tmp_name'])) {
-
-				if (move_uploaded_file($_FILES['download_file']['tmp_name'], $upload_file_tmp)) {
-
-					$sql = "INSERT INTO ".TABLE_PREFIX."downloads (name, description, downloads, category, published) VALUES ('".$name."', '".$description."', '0', '".$category."', '".$published."')";
-					$pdo = $__CMS_CONN__->prepare($sql);
-					$pdo->execute();
-
-					$sql = "SELECT * FROM ".TABLE_PREFIX."downloads WHERE description='$description' AND NAME='$name' AND category='$category'" ;
-					$pdo = $__CMS_CONN__->prepare($sql);
-					$pdo->execute();
-
-					while ($download = $pdo->fetchObject()) {
-						$id	= $download->id;
-					}
-
-					$extension = strchr($upload_file_tmp, '.');
-					$new_file = DOWNLOADS_DIRECTORY . $id . $extension;
-					rename($upload_file_tmp, $new_file);
-
-					$sql = "UPDATE ".TABLE_PREFIX."downloads SET extension='$extension' WHERE id='$id'" ;
-					$pdo = $__CMS_CONN__->prepare($sql);
-					$pdo->execute();
-
-				}
-			}
-
-			Flash::set('success', __(''.$name.' has been added to the Wunderbar downloads!'));
-			redirect(get_url('plugin/downloads/index'));
-		}
-	}
-	
 	public function edit($id) {
 		$this->display('downloads/views/backend/edit', array('id' => $id));
 	}
 
-	public function edit_download() {
-
-		global $__CMS_CONN__;
-
-		$id					= mysql_escape_string($_POST['id']);
-		$replace			= mysql_escape_string($_POST['replace']);
-		$name				= mysql_escape_string($_POST['name']);
-		$description		= mysql_escape_string($_POST['description']);
-		$category			= mysql_escape_string($_POST['category']);
-		$published			= mysql_escape_string($_POST['published']);
-
-		if(empty($_POST['name'])) {
-			Flash::set('error', __('You need to give this download a name!'));
-			redirect(get_url('plugin/downloads/edit/'.$id.''));		
-		}
-
-		else {
-
-			if ($replace == 'yes') {
-
-				$upload_dir			= DOWNLOADS_DIRECTORY . '/';
-				$upload_dir			= str_replace('//', '/', $upload_dir);
-				$upload_file		= $upload_dir . basename($_FILES['download_file']['name']);
-
-				$upload_dir_tmp		= DOWNLOADS_DIRECTORY . '/tmp/';
-				$upload_dir_tmp		= str_replace('//', '/', $upload_dir_tmp);
-				$upload_file_tmp	= $upload_dir_tmp . basename($_FILES['download_file']['name']);
-
-				if (is_uploaded_file($_FILES['download_file']['tmp_name'])) {
-
-					if (move_uploaded_file($_FILES['download_file']['tmp_name'], $upload_file_tmp)) {
-
-						$sql = "SELECT * FROM ".TABLE_PREFIX."downloads WHERE id='$id'" ;
-						$pdo = $__CMS_CONN__->prepare($sql);
-						$pdo->execute();
-
-						while($pd = $pdo->fetchObject()) {
-							$oldextension = $pd->extension;
-						}
-
-						$old_file = DOWNLOADS_DIRECTORY . $id . $oldextension;
-						unlink($old_file);
-
-						$extension = strchr($upload_file_tmp, '.');
-						$new_file = DOWNLOADS_DIRECTORY . $id . $extension;
-						rename($upload_file_tmp, $new_file);
-
-						$sql = "UPDATE ".TABLE_PREFIX."downloads SET extension='$extension' WHERE id='$id'" ;
-						$pdo = $__CMS_CONN__->prepare($sql);
-						$pdo->execute();
-
-					}
-				}
-			}
-			
-			$sql = "
-				UPDATE ".TABLE_PREFIX."downloads
-				SET	`name`='$name',
-					`description`='$description',
-					`category`='$category',
-					`published`='$published'
-				WHERE id='$id';
-			";
-			$pdo = $__CMS_CONN__->prepare($sql);
-			$pdo->execute();
-
-			Flash::set('success', __(''.$name.' has been edited'));
-			redirect(get_url('plugin/downloads/index'));
-		}
-	}
 
 	function publish($id) {
 		global $__CMS_CONN__;

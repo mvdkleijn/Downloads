@@ -53,6 +53,9 @@
 					`filetype` varchar(16) default NULL,
 					`extension` varchar(11) default NULL,
 					`filesize` varchar(16) default NULL,
+					`date_added` timestamp default NULL,
+					`date_publish` timestamp default NULL,
+					`date_unpublish` timestamp default NULL,
 					PRIMARY KEY (`download_id`)
 				) AUTO_INCREMENT=0
 			";

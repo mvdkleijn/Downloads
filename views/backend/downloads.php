@@ -1,3 +1,4 @@
+<h1>Downloads</h1>
 <?php
 
 	$download = $downloadInfo['0'];
@@ -53,6 +54,81 @@
 				</select>
 			</td>
 			<td class="help">Should we publish this file?</td>
+		</tr>
+		<tr>
+			<td class="label">Future Publishing</td>
+			<td class="field">
+				<input maxlength="10" name="future_date" size="10" type="text" value="<?php echo $download['future_date'] ?>" /> 
+				<img onclick="displayDatePicker('future_date');" src="images/icon_cal.gif" alt="Show Calendar" /> at 
+				<select name="future_hour">
+					<?php
+
+						$hour = -1;
+						do {
+							$hour++;
+							if($hour < 10) {
+								$hour = '0' . $hour;
+							}
+							echo '<option value="'.$hour.'">'.$hour.'</option>';
+						}
+						while($hour <= 23);
+
+					?>
+				</select> : 
+				<select name="future_minute">
+					<?php
+
+						$minute = -1;
+						do {
+							$minute++;
+							if($minute < 10) {
+								$minute = '0' . $minute;
+							}
+							echo '<option value="'.$minute.'">'.$minute.'</option>';
+						}
+						while($minute <= 59);
+
+					?>
+				</select>
+			</td>
+			<td class="help" rowspan="2">Set a date to publish and unpublish this file. Your previous publish setting will be overridden if you complete this and the publish time is in the future.<br /><strong>Note:</strong> Uses Cron</td>
+		</tr>
+		<tr>
+			<td class="label">Future <strong>UN</strong>Publishing</td>
+			<td class="field">
+				<input maxlength="10" name="future_unpublish_date" size="10" type="text" value="<?php echo $download['future_unpublish_date'] ?>" /> 
+				<img onclick="displayDatePicker('future_unpublish_date');" src="images/icon_cal.gif" alt="Show Calendar" /> at 
+				<select name="future_un_hour">
+					<?php
+
+						$hour = -1;
+						do {
+							$hour++;
+							if($hour < 10) {
+								$hour = '0' . $hour;
+							}
+							echo '<option value="'.$hour.'">'.$hour.'</option>';
+						}
+						while($hour <= 23);
+
+					?>
+				</select> : 
+				<select name="future_un_minute">
+					<?php
+
+						$minute = -1;
+						do {
+							$minute++;
+							if($minute < 10) {
+								$minute = '0' . $minute;
+							}
+							echo '<option value="'.$minute.'">'.$minute.'</option>';
+						}
+						while($minute <= 59);
+
+					?>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td class="label">Available</td>
