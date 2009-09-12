@@ -1,7 +1,7 @@
 <?php
 
 class DownloadsController extends PluginController {
-	
+
 	public function __construct() {
 		$this->setLayout('backend');
 		$this->assignToLayout('sidebar', new View('../../plugins/downloads/views/backend/sidebar'));

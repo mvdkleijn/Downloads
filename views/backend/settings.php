@@ -21,7 +21,7 @@
 		<tr>
 			<td class="label">Core Root</td>
 			<td class="field"><input name="core_root" class="textbox" type="text" value="<?php echo $settings['core_root'] ?>" /></td>
-			<td class="help">Only change this is you have changed your core root. It allows this plugin to work on Frog and Wolf.</small></td>
+			<td class="help">Only change this is you have changed your core root.</small></td>
 		</tr>
 		<tr>
 			<td></td>

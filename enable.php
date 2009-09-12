@@ -2,12 +2,13 @@
 
 	global $__CMS_CONN__;
 
-
 	/**
 		Sanity Check - decide whether we're enabling for the first time or after a disable
-		Also check whether we're on Frog or Wolf
+		Also check where our Core Root is
 	**/
+
 	$core_root = end(explode('/', CORE_ROOT));
+
 	$sql = "
 				SELECT * FROM `".TABLE_PREFIX."plugin_settings` WHERE plugin_id='downloads'
 			;";

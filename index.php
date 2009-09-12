@@ -1,26 +1,18 @@
 <?php
 
-Plugin::setInfos(array(
-	'id'          => 'downloads',
-	'title'       => 'Download Manager',
-	'author'      => 'Andrew Waters',
-	'version'     => '1.0'
-));
+	Plugin::setInfos(array(
+		'id'          => 'downloads',
+		'title'       => 'Download Manager',
+		'author'      => 'Andrew Waters',
+		'version'     => '1.0'
+	));
 
+	include('models/FileManager.php');
+	include('models/CategoryManager.php');
+	include('models/HistoryManager.php');
+	include('models/SettingsManager.php');
 
-include('models/FileManager.php');
-include('models/CategoryManager.php');
-include('models/HistoryManager.php');
-include('models/SettingsManager.php');
-
-
-Plugin::addController('downloads', 'Downloads', 'developer,administrator,editor', TRUE);
-
-
-
-
-
-
+	Plugin::addController('downloads', 'Downloads', 'developer,administrator,editor', TRUE);
 
 
 
