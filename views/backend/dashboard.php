@@ -10,10 +10,13 @@
 		<th>Edit</th>
 	</thead>
 	<tbody>
-<?php foreach($downloads as $download) { ?>
+<?php foreach($downloads as $download) {
+		$categories = new DownloadCategoryManager();
+		$category = $categories->getCategories($download['category']);
+?>
 		<tr class="<?php echo odd_even(); ?>">
 			<td><a href="<?php echo get_url('plugin/downloads/files/edit/'); echo $download['download_id']; ?>"><?php echo $download['name'] ?></a></td>
-			<td><?php echo $download['category'] ?></td>
+			<td><?php echo $category['0']['name']; ?></td>
 			<td><?php echo $download['downloads'] ?></td>
 			<td><?php echo $download['published'] ?></td>
 			<td><?php echo $download['size'] ?></td>
