@@ -9,10 +9,12 @@
 	$categoryList = implode(':!:!:', $categoryOuput);
 	$categoryList = str_replace(':!:!:', '', $categoryList);
 	if(is_numeric($id)) {
+		echo '<h3>Editing Download</h3>';
 		$action = 'editFile';
 		$fileHelp = 'Select a replacement File';
 	}
 	else {
+		echo '<h3>Adding Download</h3>';
 		$action = 'addFile';
 		$fileHelp = 'Choose the file you want to upload';
 	}

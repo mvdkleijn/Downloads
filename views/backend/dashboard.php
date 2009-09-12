@@ -1,5 +1,6 @@
 <h1>Downloads</h1>
 
+<h3>All Downloads</h3>
 <table class="index">
 	<thead>
 		<th>Name</th>
@@ -17,7 +18,7 @@
 		$category = $categories->getCategories($download['category']);
 ?>
 		<tr class="<?php echo odd_even(); ?>">
-			<td><a href="<?php echo get_url('plugin/downloads/files/'); echo $download['download_id']; ?>"><?php echo $download['name'] ?></a></td>
+			<td><img align="top" src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-small.png" alt="download" /> <a href="<?php echo get_url('plugin/downloads/files/'); echo $download['download_id']; ?>"><?php echo $download['name'] ?></a></td>
 			<td><?php echo $category['0']['name']; ?></td>
 			<td><?php echo $download['downloads'] ?></td>
 			<td><a href="<?php echo get_url('plugin/downloads/publish/'.$download['download_id'].''); ?>"><img src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-published-<?php echo $download['published']; ?>.png" /></a></td>
