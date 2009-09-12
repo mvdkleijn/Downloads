@@ -54,8 +54,10 @@
 					`extension` varchar(11) default NULL,
 					`filesize` varchar(16) default NULL,
 					`date_added` timestamp,
-					`date_publish` timestamp,
-					`date_unpublish` timestamp,
+					`added_by_id` int(11),
+					`added_by_name` varchar(128),
+					`date_publish` int(16),
+					`date_unpublish` int(16),
 					PRIMARY KEY (`download_id`)
 				) AUTO_INCREMENT=0
 			";
@@ -76,13 +78,16 @@
 	$sql =	"
 				CREATE TABLE `".TABLE_PREFIX."download_history` (
 					`record_id` int(11) NOT NULL auto_increment,
-					`download_id` varchar(128) default NULL,
-					`category_id` varchar(1024) default NULL,
+					`download_id` int(11) default NULL,
+					`download_name` varchar(128) default NULL,
+					`category_id` int(11) default NULL,
+					`category_name` varchar(1024) default NULL,
 					`user_id` int(11) default NULL,
 					`user_name` varchar(128) default NULL,
 					`user_email` varchar(128) default NULL,
 					`user_ip` varchar(128) default NULL,
 					`refererrer` varchar(1024) default NULL,
+					`date_downloaded` timestamp,
 					PRIMARY KEY (`record_id`)
 				) AUTO_INCREMENT=0
 			";

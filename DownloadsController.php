@@ -141,7 +141,7 @@ class DownloadsController extends PluginController {
 
 
 
-
+// LEGACY
 
 	public function edit($id) {
 		$this->display('downloads/views/backend/edit', array('id' => $id));

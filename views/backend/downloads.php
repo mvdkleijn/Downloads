@@ -91,7 +91,7 @@
 					?>
 				</select>
 			</td>
-			<td class="help" rowspan="2">Set a date to publish and unpublish this file. Your previous publish setting will be overridden if you complete this and the publish time is in the future.<br /><strong>Note:</strong> Uses Cron</td>
+			<td class="help" rowspan="2">Set a date to publish and unpublish this file. If Published setting is set to 'No', this download will not be available until the time specified here. If it is set to 'Yes' and you have set times here, your download will be available within those times. If you have left the unpublishing field blank, the download will be available from the time publishing is set to (ie now or in the future) until further notice.</td>
 		</tr>
 		<tr>
 			<td class="label">Future <strong>UN</strong>Publishing</td>

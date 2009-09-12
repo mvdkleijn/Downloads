@@ -23,29 +23,19 @@ class DownloadFileManager {
 	}
 
 	function addFile($_POST) {
+		AuthUser::load();
+		$user_id = AuthUser::getRecord()->id;
+		$user_name = AuthUser::getRecord()->name;
 		if($_POST['name'] == '' ) { return FALSE; exit(); }
 		$today = date('Y-m-d G:i:s');
 		if($_POST['future_date'] != '') {
-			$future_publish = $_POST['future_date'] . ' ' . $_POST['future_hour'] . ':' . $_POST['future_minute'];
-			$future_unpublish = $_POST['future_unpublish_date'] . ' ' . $_POST['future_un_hour'] . ':' . $_POST['future_un_minute'];
-			$pub_time = explode('-', $_POST['future_date']);
-			$unp_time = explode('-', $_POST['future_unpublish_date']);
-			$now = time();
-			$pub_time_unix = mktime($_POST['future_hour'], $_POST['future_minute'], 0, $pub_time['1'], $pub_time['2'], $pub_time['0']);
-			$unp_time_unix = mktime($_POST['future_un_hour'], $_POST['future_un_minute'], 0, $unp_time['1'], $unp_time['2'], $unp_time['0']);
-			$pub_result = ($pub_time_unix - $now) / 86400;
-			$unp_result = ($unp_time_unix - $now) / 86400;
-			if($pub_result < 0) {
-				$published = $_POST['published'];
-			}
-			else {
-				$published = 'no';
-			}
+			$pub_date = explode('-', $_POST['future_date']);
+			$pub_time_unix = mktime($_POST['future_hour'], $_POST['future_minute'], 0, $pub_date['1'], $pub_date['2'], $pub_date['0']);
 		}
-		else {
-			$published = $_POST['published'];
+		if($_POST['future_unpublish_date'] != '') {
+			$unp_date = explode('-', $_POST['future_unpublish_date']);
+			$unp_time_unix = mktime($_POST['future_un_hour'], $_POST['future_un_minute'], 0, $unp_date['1'], $unp_date['2'], $unp_date['0']);		
 		}
-		echo $published; exit();
 		$fileName = $_FILES['download_file']['name'];
 		$extension = end(explode('.', $fileName));
 		$fileTmpName = $_FILES['download_file']['tmp_name'];
@@ -61,7 +51,7 @@ class DownloadFileManager {
 					'".filter_var($_POST['description'], FILTER_SANITIZE_STRING)."',
 					'0',
 					'".filter_var($_POST['category'], FILTER_SANITIZE_STRING)."',
-					'".filter_var($published, FILTER_SANITIZE_STRING)."',
+					'".filter_var($_POST['published'], FILTER_SANITIZE_STRING)."',
 					'".filter_var($_POST['available'], FILTER_SANITIZE_STRING)."',
 					'".filter_var($_POST['require_login'], FILTER_SANITIZE_STRING)."',
 					'".filter_var($_POST['require_password'], FILTER_SANITIZE_STRING)."',
@@ -70,8 +60,10 @@ class DownloadFileManager {
 					'".filter_var($extension, FILTER_SANITIZE_STRING)."',
 					'".$fileSize."',
 					'".$today."',
-					'".filter_var($future_publish, FILTER_SANITIZE_STRING)."',
-					'".filter_var($future_unpublish, FILTER_SANITIZE_STRING)."'
+					'$user_id',
+					'$user_name',					
+					'".filter_var($pub_time_unix, FILTER_SANITIZE_STRING)."',
+					'".filter_var($unp_time_unix, FILTER_SANITIZE_STRING)."'
 				)";
 		$stmt = $this->db->prepare($sql);
 		$stmt->execute();
