@@ -5,8 +5,9 @@
 
 	/**
 		Sanity Check - decide whether we're enabling for the first time or after a disable
+		Also check whether we're on Frog or Wolf
 	**/
-
+	$core_root = end(explode('/', CORE_ROOT));
 	$sql = "
 				SELECT * FROM `".TABLE_PREFIX."plugin_settings` WHERE plugin_id='downloads'
 			;";
@@ -25,7 +26,7 @@
 					INSERT INTO `".TABLE_PREFIX."plugin_settings` (`plugin_id`,`name`,`value`)
 					VALUES
 						('downloads','active','1'),
-						('downloads','core_root','wolf'),
+						('downloads','core_root','$core_root'),
 						('downloads','download_path',''),
 						('downloads','download_path_cache',''),
 						('downloads','download_url','')
