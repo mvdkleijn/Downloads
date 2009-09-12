@@ -135,6 +135,7 @@ class DownloadFileManager {
 
 	function deleteFile($id) {
 		if($id) {
+			$deleteFromDisk = self::deleteFileFromDisk($id);
 			$sql = "DELETE FROM ".TABLE_PREFIX."download WHERE download_id='$id'";
 			$stmt = $this->db->prepare($sql);
 			$stmt->execute();

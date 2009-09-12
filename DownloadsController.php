@@ -106,14 +106,8 @@ class DownloadsController extends PluginController {
 			$id = end(explode('/', $_SERVER['REQUEST_URI']));
 			$downloadManager = new DownloadFileManager();
 			$deleteFile = $downloadManager->deleteFile($id);
-			if($deleteFile == TRUE) {
-				Flash::set('error', __('This file has been deleted.'));
-				redirect(get_url('plugin/downloads'));	
-			}
-			else {
-				Flash::set('error', __('There was a problem deleting this file'));
-				redirect(get_url('plugin/downloads'));	
-			}
+			Flash::set('error', __('This file has been deleted.'));
+			redirect(get_url('plugin/downloads'));	
 		} 
 		else {
 			$categories = new DownloadCategoryManager();

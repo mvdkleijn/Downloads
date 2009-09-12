@@ -27,6 +27,7 @@
 						('downloads','active','1'),
 						('downloads','core_root','wolf'),
 						('downloads','download_path',''),
+						('downloads','download_path_cache',''),
 						('downloads','download_url','')
 				;";
 	}

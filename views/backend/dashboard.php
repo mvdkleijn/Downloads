@@ -20,7 +20,7 @@
 			<td><?php echo $download['downloads'] ?></td>
 			<td><?php echo ucwords($download['published']) ?></td>
 			<td><?php echo number_format((($download['filesize'] / 1024) / 1024), 2) ?><small>MB</small></td>
-			<td><a href="<?php echo get_url('plugin/downloads/files/'); echo $download['download_id']; ?>">Edit</a> | <a href="<?php echo get_url('plugin/downloads/files/delete/'); echo $download['download_id']; ?>">Delete</a></td>
+			<td><a href="<?php echo get_url('plugin/downloads/files/'); echo $download['download_id']; ?>">Edit</a> | <a href="<?php echo get_url('plugin/downloads/files/delete/'); echo $download['download_id']; ?>" onclick="return confirm('Are you sure you want to DELETE this FILE?\n\nIt will be deleted from the server as well - perhaps you\'d like to consider unpublishing instead?');">Delete</a></td>
 		</tr>
 <?php } ?>
 	</tbody>
