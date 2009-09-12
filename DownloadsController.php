@@ -125,47 +125,10 @@ class DownloadsController extends PluginController {
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// LEGACY
-
-	public function edit($id) {
-		$this->display('downloads/views/backend/edit', array('id' => $id));
-	}
-
-
 	function publish($id) {
-		global $__CMS_CONN__;
-		$sql = "
-			UPDATE ".TABLE_PREFIX."downloads
-			SET `published`='1'
-			WHERE id='".$id."'";
-		$pdo = $__CMS_CONN__->prepare($sql);
-		$pdo->execute();
+		$downloadManager = new DownloadFileManager();
+		$downloadInfo = $downloadManager->publish($id);
 		Flash::set('success', __('This download has been published'));
-		redirect(get_url('plugin/downloads'));
-	}
-
-	function unpublish($id) {
-		global $__CMS_CONN__;
-		$sql = "
-			UPDATE ".TABLE_PREFIX."downloads
-			SET `published`='0'
-			WHERE id='".$id."'";
-		$pdo = $__CMS_CONN__->prepare($sql);
-		$pdo->execute();
-		Flash::set('error', __('This download has been unpublished from the main site'));
 		redirect(get_url('plugin/downloads'));
 	}
 }

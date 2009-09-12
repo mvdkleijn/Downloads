@@ -184,4 +184,16 @@ class DownloadFileManager {
 		}
 	}
 
+	function publish($id) {
+		$currentStatus = self::getDownloadInfo($id);
+		$currentStatus = $currentStatus['0']['published'];
+		if($currentStatus == 'yes') { $newStatus = 'no'; } else { $newStatus = 'yes'; }
+		$sql = "UPDATE ".TABLE_PREFIX."download SET
+					published='".$newStatus."'
+				WHERE download_id='".$id."'
+		";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+	}
+
 }
