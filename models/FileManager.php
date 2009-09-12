@@ -36,12 +36,7 @@ class DownloadFileManager {
 			$pub_result = ($pub_time_unix - $now) / 86400;
 			$unp_result = ($unp_time_unix - $now) / 86400;
 			if($pub_result < 0) {
-				if($pub_result < $unp_result) {
-					$published = $_POST['published'];
-				}
-				else {
-					$published = 'no';
-				}
+				$published = $_POST['published'];
 			}
 			else {
 				$published = 'no';
