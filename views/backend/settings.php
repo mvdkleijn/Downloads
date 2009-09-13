@@ -11,7 +11,7 @@
 		<tr>
 			<td class="label">Server Path</td>
 			<td class="field"><input name="download_path" class="textbox" type="text" value="<?php echo $settings['download_path'] ?>" /></td>
-			<td class="help">The path to your downloads on the server<br /><br /><small>e.g. 'home/username/public_html/downloads'</small></td>
+			<td class="help">The absolute path to your downloads on the server. <strong>Be sure to CHMOD this folder to 777</strong><br /><br /><small>e.g. 'home/username/public_html/downloads'</small></td>
 		</tr>
 		<tr>
 			<td class="label">Core Root</td>
