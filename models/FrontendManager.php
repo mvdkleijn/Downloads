@@ -8,7 +8,8 @@ class DownloadFrontendManager {
 	}
 
 	function serveFile() {
-		$download_id = $_GET['id'];
+		// TODO: add different ways of presenting ID in the URL - hence sanitize String, not Int
+		$download_id = filter_vars($_GET['id'], FILTER_SANITIZE_STRING);
 		if($download_id) {
 			$fileManager = new DownloadFileManager();
 			$fileInfo = $fileManager->getDownloadInfo($download_id);
