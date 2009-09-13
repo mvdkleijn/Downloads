@@ -53,6 +53,7 @@
 					`require_login` enum ('yes', 'no'),
 					`require_password` enum ('yes', 'no'),
 					`password` varchar(128) default NULL,
+					`serve_type` enum ('download', 'browse'),
 					`filetype` varchar(16) default NULL,
 					`extension` varchar(11) default NULL,
 					`filesize` varchar(16) default NULL,
