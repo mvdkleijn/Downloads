@@ -81,6 +81,7 @@
 	$sql =	"
 				CREATE TABLE `".TABLE_PREFIX."download_history` (
 					`record_id` int(11) NOT NULL auto_increment,
+					`status` enum('success','fail') default NULL,
 					`download_id` int(11) default NULL,
 					`download_name` varchar(128) default NULL,
 					`category_id` int(11) default NULL,

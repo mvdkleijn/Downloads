@@ -9,7 +9,8 @@ class DownloadFrontendManager {
 
 	function serveFile() {
 		// TODO: add different ways of presenting ID in the URL - hence sanitize String, not Int
-		$download_id = filter_vars($_GET['id'], FILTER_SANITIZE_STRING);
+		$download_id = filter_var($_GET['id'], FILTER_SANITIZE_STRING);
+		$historyManager = new DownloadHistoryManager();
 		if($download_id) {
 			$fileManager = new DownloadFileManager();
 			$fileInfo = $fileManager->getDownloadInfo($download_id);
@@ -17,6 +18,7 @@ class DownloadFrontendManager {
 				$fileInfo = $fileInfo['0'];
 				$fileServeAllowed = self::isFileServeAllowed($fileInfo);
 				if($fileServeAllowed == 'serve') {
+					$addHistory = $historyManager->addToHistory($fileInfo, 'success');
 					$settings = Plugin::getAllSettings('downloads');
 					$fileOnDisk = $settings['download_path'] . '/' . $download_id . '.' . $fileInfo['extension'];
 					$fileOnDisk = str_replace('//', '/', $fileOnDisk);
@@ -37,6 +39,9 @@ class DownloadFrontendManager {
 					header('Expires: Sat, 25 Sep 1982 07:33:00 GMT');
 					readfile($fileOnDisk);
 					exit;
+				}
+				else {
+					$addHistory = $historyManager->addToHistory($fileInfo, 'fail');
 				}
 			}
 		}
