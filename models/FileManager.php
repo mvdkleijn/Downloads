@@ -55,6 +55,7 @@ class DownloadFileManager {
 					'".filter_var($_POST['require_login'], FILTER_SANITIZE_STRING)."',
 					'".filter_var($_POST['require_password'], FILTER_SANITIZE_STRING)."',
 					'".$password."',
+					'".filter_var($_POST['serve_type'], FILTER_SANITIZE_STRING)."',
 					'".filter_var($fileType, FILTER_SANITIZE_STRING)."',
 					'".filter_var($extension, FILTER_SANITIZE_STRING)."',
 					'".$fileSize."',
@@ -107,6 +108,7 @@ class DownloadFileManager {
 						available='".filter_var($_POST['available'], FILTER_SANITIZE_STRING)."',
 						require_login='".filter_var($_POST['require_login'], FILTER_SANITIZE_STRING)."',
 						require_password='".filter_var($_POST['require_password'], FILTER_SANITIZE_STRING)."',
+						serve_type='".filter_var($_POST['serve_type'], FILTER_SANITIZE_STRING)."',
 						date_publish='".filter_var($pub_time_unix, FILTER_SANITIZE_STRING)."',
 						date_unpublish='".filter_var($unp_time_unix, FILTER_SANITIZE_STRING)."'
 					WHERE download_id='".$_POST['download_id']."'
@@ -114,7 +116,7 @@ class DownloadFileManager {
 		$stmt = $this->db->prepare($sql);
 		$stmt->execute();
 		$count = $stmt->rowCount();
-		if($_FILES['download_file']) {
+		if(isset($_FILES['download_file']) && ($_FILES['download_file']['name'] != '')) {
 			$deleteOldFile = self::deleteFileFromDisk($_POST['download_id']);
 			$fileName = $_FILES['download_file']['name'];
 			$extension = end(explode('.', $fileName));

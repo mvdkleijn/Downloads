@@ -62,6 +62,16 @@
 			<td class="help"></td>
 		</tr>
 		<tr>
+			<td class="label">Serve Type</td>
+			<td class="field">
+				<select name="serve_type">
+					<option value="browse"<?php if($download['serve_type'] == 'browse') { echo ' selected="selected"'; } ?>>Allow Browsing</option>
+					<option value="download"<?php if($download['serve_type'] == 'download') { echo ' selected="selected"'; } ?>>Force Download</option>
+				</select>
+			</td>
+			<td class="help">Should we force download of this file or allow the browser to display it?</td>
+		</tr>
+		<tr>
 			<td class="label">Published</td>
 			<td class="field">
 				<select name="published">
@@ -178,7 +188,7 @@
 					<option value="no"<?php if($download['available'] == 'no') { echo ' selected="selected"'; } ?>>No</option>
 				</select>
 			</td>
-			<td class="help">Should we stop this file from being downloaded?</td>
+			<td class="help">Should we stop this file from being downloaded? This is useful when you don't want the file to be listed on your site, but still want to to exist.</td>
 		</tr>
 		<tr>
 			<td class="label">Require Login</td>

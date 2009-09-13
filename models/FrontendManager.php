@@ -13,21 +13,23 @@ class DownloadFrontendManager {
 			$fileManager = new DownloadFileManager();
 			$fileInfo = $fileManager->getDownloadInfo($download_id);
 			if(count($fileInfo) != 0) {
-				$fileServeAllowed = self::isFileServeAllowed($download_id);
-				if($fileServeAllowed == TRUE) {
+				$fileInfo = $fileInfo['0'];
+				$fileServeAllowed = self::isFileServeAllowed($fileInfo);
+				if($fileServeAllowed == 'serve') {
 					$settings = Plugin::getAllSettings('downloads');
-					$fileOnDisk = $settings['download_path'] . '/' . $download_id . '.' . $fileInfo['0']['extension'];
+					$fileOnDisk = $settings['download_path'] . '/' . $download_id . '.' . $fileInfo['extension'];
 					$fileOnDisk = str_replace('//', '/', $fileOnDisk);
-					header('Content-Type: '.$fileInfo['0']['filetype'].'');
-					if($fileInfo['0']['serve_type'] == 'download') {
-						header('Content-Disposition: attachment; filename="' . $fileInfo['0']['name'] . '"');
+					header('Content-Type: '.$fileInfo['filetype'].'');
+					if($fileInfo['serve_type'] == 'download') {
+						header('Content-Disposition: attachment; filename="' . $fileInfo['name'] . '"');
 					}
-					elseif($fileInfo['0']['serve_type'] == 'browse') {
-						header('Content-Disposition: inline; filename="' . $fileInfo['0']['name'] . '"');
+					elseif($fileInfo['serve_type'] == 'browse') {
+						header('Content-Disposition: inline; filename="' . $fileInfo['name'] . '"');
 					}
-					header('Content-Length: ' . $fileInfo['0']['filesize']);
+					header('Content-Length: ' . $fileInfo['filesize']);
 					header('Content-Transfer-Encoding: binary');
 					header('Accept-Ranges: bytes');
+					// TODO: build caching features
 					header('Cache-Control: private');
 					header('Pragma: private');
 					// The time yours truly appeared in this world :D
@@ -39,8 +41,84 @@ class DownloadFrontendManager {
 		}
 	}
 
-	function isFileServeAllowed($id) {
-		return TRUE;
+	function isFileServeAllowed($fileInfo) {
+		$fileIsAvailable = self::fileisAvailable($fileInfo);
+		$fileIsWithinPublishedTime = self::fileIsWithinPublishedTime($fileInfo);
+		$fileRequiresLogin = self::fileRequiresLogin($fileInfo);
+		$fileRequiresPassword = self::fileRequiresPassword($fileInfo);
+		if(	$fileIsAvailable == 'serve' &&
+			$fileRequiresLogin == 'serve' &&
+			$fileIsWithinPublishedTime == 'serve' &&
+			$fileRequiresPassword == 'serve'
+			) {
+			return 'serve';
+		}
+		else {
+			return 'no';
+		}
 	}
+
+	function fileIsAvailable($fileInfo) {
+		if($fileInfo['available'] == 'yes') {
+			return 'serve';
+		}
+		else {
+			return 'no';
+		}
+	}
+	
+	function fileIsWithinPublishedTime($fileInfo) {
+		$now = time();
+		if(($fileInfo['date_publish'] == '0') && ($fileInfo['date_unpublish'] == '0')) {
+			return 'serve';
+		}
+		elseif(($fileInfo['date_publish'] != '0') && ($fileInfo['date_unpublish'] != '0')) {
+			if((($fileInfo['date_publish'] - $now) <= 0) && (($fileInfo['date_unpublish'] - $now) >= 0)) {
+				return 'serve';
+			}
+			else {
+				return 'no';
+			}
+		}
+		else {
+			if(($fileInfo['date_publish'] != '0') && ($fileInfo['date_unpublish'] == '0')) {
+				if(($fileInfo['date_publish'] - $now) <= 0) {
+					return 'serve';
+				}
+				else {
+					return 'no';
+				}
+			}
+			elseif(($fileInfo['date_publish'] == '0') && ($fileInfo['date_unpublish'] != '0')) {
+				if(($fileInfo['date_unpublish'] - $now) >= 0) {
+					return 'serve';
+				}
+				else {
+					return 'no';
+				}
+			}
+		}
+	}
+
+	function fileRequiresLogin($fileInfo) {
+		if($fileInfo['require_login'] == 'yes') {
+			AuthUser::load();
+			if(AuthUser::isLoggedIn()) {
+				return 'serve';
+			}
+			else {
+				return 'no';
+			}
+		}
+		else {
+			return 'serve';
+		}
+	}
+
+	function fileRequiresPassword($fileInfo) {
+		// TODO
+		return 'serve';
+	}
+
 
 }
