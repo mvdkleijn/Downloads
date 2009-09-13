@@ -84,7 +84,7 @@
 		<tr>
 			<td class="label">Future Publishing</td>
 			<td class="field">
-				<input maxlength="10" name="future_date" size="10" type="text" value="<?php echo $publishDate ?>" /> 
+				<input class="date" maxlength="10" name="future_date" size="10" type="text" value="<?php echo $publishDate ?>" /> 
 				<img onclick="displayDatePicker('future_date');" src="images/icon_cal.gif" alt="Show Calendar" /> at 
 				<select name="future_hour">
 					<?php
@@ -134,7 +134,7 @@
 		<tr>
 			<td class="label">Future <strong>UN</strong>Publishing</td>
 			<td class="field">
-				<input maxlength="10" name="future_unpublish_date" size="10" type="text" value="<?php echo $unPublishDate ?>" /> 
+				<input class="date" maxlength="10" name="future_unpublish_date" size="10" type="text" value="<?php echo $unPublishDate ?>" /> 
 				<img onclick="displayDatePicker('future_unpublish_date');" src="images/icon_cal.gif" alt="Show Calendar" /> at 
 				<select name="future_un_hour">
 					<?php
