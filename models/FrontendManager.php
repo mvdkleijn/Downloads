@@ -13,6 +13,7 @@ class DownloadFrontendManager {
 		$historyManager = new DownloadHistoryManager();
 		if($download_id) {
 			$fileManager = new DownloadFileManager();
+			$increment = $fileManager->incrementDownloads($download_id);
 			$fileInfo = $fileManager->getDownloadInfo($download_id);
 			if(count($fileInfo) != 0) {
 				$fileInfo = $fileInfo['0'];

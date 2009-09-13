@@ -156,6 +156,21 @@ class DownloadFileManager {
 		}
 	}
 
+	function incrementDownloads($id) {
+		$sql = "SELECT * FROM ".TABLE_PREFIX."download WHERE download_id='$id'";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+		while($result = $stmt->fetchObject()) {
+			$newCount = $result->downloads + 1;		
+		}
+		$sql = "UPDATE ".TABLE_PREFIX."download SET
+					downloads='".$newCount."'
+				WHERE download_id='".$id."'
+		";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+	}
+
 	function deleteFileFromDisk($id) {
 		$settings = Plugin::getAllSettings('downloads');
 		$downloadPath = $settings['download_path'];

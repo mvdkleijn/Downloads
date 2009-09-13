@@ -31,6 +31,10 @@ class DownloadsController extends PluginController {
 		}
 	}
 
+	public function history($id) {
+		$this->display('downloads/views/backend/history', array('id' => $id));
+	}
+
 	public function categories($id) {
 		if($id == 'edit') {
 			$categoryManager = new DownloadCategoryManager();
