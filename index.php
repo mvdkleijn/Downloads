@@ -16,6 +16,7 @@
 	Plugin::addController('downloads', 'Downloads', 'developer,administrator,editor', TRUE);
 
 	Behavior::add('download_page', '');
+	Behavior::add('download_login', '');
 	Observer::observe('page_found', 'downloads_page_found');
 
 	function downloads_page_found($page) {

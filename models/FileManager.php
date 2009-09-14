@@ -26,6 +26,13 @@ class DownloadFileManager {
 		AuthUser::load();
 		$user_id = AuthUser::getRecord()->id;
 		$user_name = AuthUser::getRecord()->name;
+		if($_POST['published'] == '' && $_POST['available'] == '' && $_POST['require_login'] == '' && $_POST['require_password'] == '' && $_POST['serve_type'] == '') {
+			$forcePublished = 'yes';
+			$forceAvailable = 'yes';
+			$forceRequirelogin = 'no';
+			$forceRequirePassword = 'no';	
+			$forceServeType = 'browse';
+		}
 		if($_POST['name'] == '' ) { return FALSE; exit(); }
 		if($_POST['future_date'] != '') {
 			$pub_date = explode('-', $_POST['future_date']);
@@ -50,12 +57,12 @@ class DownloadFileManager {
 					'".filter_var($_POST['description'], FILTER_SANITIZE_STRING)."',
 					'0',
 					'".filter_var($_POST['category'], FILTER_SANITIZE_STRING)."',
-					'".filter_var($_POST['published'], FILTER_SANITIZE_STRING)."',
-					'".filter_var($_POST['available'], FILTER_SANITIZE_STRING)."',
-					'".filter_var($_POST['require_login'], FILTER_SANITIZE_STRING)."',
-					'".filter_var($_POST['require_password'], FILTER_SANITIZE_STRING)."',
+					'".filter_var($_POST['published'], FILTER_SANITIZE_STRING)."$forcePublished',
+					'".filter_var($_POST['available'], FILTER_SANITIZE_STRING)."$forceAvailable',
+					'".filter_var($_POST['require_login'], FILTER_SANITIZE_STRING)."$forceRequirelogin',
+					'".filter_var($_POST['require_password'], FILTER_SANITIZE_STRING)."$forceRequirePassword',
 					'".$password."',
-					'".filter_var($_POST['serve_type'], FILTER_SANITIZE_STRING)."',
+					'".filter_var($_POST['serve_type'], FILTER_SANITIZE_STRING)."$forceServeType',
 					'".filter_var($fileType, FILTER_SANITIZE_STRING)."',
 					'".filter_var($extension, FILTER_SANITIZE_STRING)."',
 					'".$fileSize."',

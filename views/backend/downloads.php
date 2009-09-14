@@ -53,10 +53,17 @@
 			<td class="field"><textarea name="description" class="textbox"><?php echo $download['description'] ?></textarea></td>
 			<td class="help"></td>
 		</tr>
+<?php
+
+	$settings = Plugin::getAllSettings('downloads');
+	if($settings['options_mode'] == 'advanced') {
+
+?>
 		<tr>
 			<td class="label">Category</td>
 			<td class="field">
 				<select name="category">
+					<option value="">-- none --</option>
 					<?php echo $categoryList ?>
 				</select>
 			</td>
@@ -216,6 +223,11 @@
 			<td class="field"><input name="password" type="password" class="textbox" value="" /></td>
 			<td class="help">If you want password protection, please enter it here. Leave blank for unchanged.</td>
 		</tr>
+<?php
+
+	}		
+
+?>
 		<tr>
 			<td class="label"></td>
 			<td class="field" colspan="2"><button id="download-add">Save this Download</button> or <a href="<?php echo $url; ?>">cancel changes</a></td>

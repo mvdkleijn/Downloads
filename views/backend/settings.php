@@ -4,6 +4,20 @@
 	<input type="hidden" name="active" value="1" />
 	<table class="fieldset">
 		<tr>
+			<td class="help" colspan="3">Plugin Interface</td>
+		</tr>
+		<tr>
+			<td class="label">Options</td>
+			<td class="field">
+				<input type="radio" name="options_mode" value="basic"<?php if($settings['options_mode'] == 'basic') { echo ' checked="checked"'; } ?>> <small>Basic</small><br />
+				<input type="radio" name="options_mode" value="advanced"<?php if($settings['options_mode'] == 'advanced') { echo ' checked="checked"'; } ?>> <small>Advanced</small>
+			</td>
+			<td class="help">Would you like to run this plugin in basic or advanced mode? Advanced offers you publishing customisation, password and login protection.</td>
+		</tr>
+		<tr>
+			<td class="help" colspan="3">Environment</td>
+		</tr>
+		<tr>
 			<td class="label">Download URL</td>
 			<td class="field"><input name="download_url" class="textbox" type="text" value="<?php echo $settings['download_url'] ?>" /></td>
 			<td class="help">The URL to your downloads Page<br />This should be a FULL URL, which will then allow you to use subdomains if you like<br /><br /><small>e.g. 'http://www.domain.com/downloads'<br />e.g. 'http://downloads.domain.com'</small></td>
@@ -16,7 +30,26 @@
 		<tr>
 			<td class="label">Core Root</td>
 			<td class="field"><input name="core_root" class="textbox" type="text" value="<?php echo $settings['core_root'] ?>" /></td>
-			<td class="help">Only change this is you have changed your core root.</small></td>
+			<td class="help">Only change this if you have changed your core root.</small></td>
+		</tr>
+		<tr>
+			<td class="help" colspan="3">Security</td>
+		</tr>
+		<tr>
+			<td class="label">MD5</td>
+			<td class="field">
+				<input type="radio" name="md5" value="yes"<?php if($settings['md5'] == 'yes') { echo ' checked="checked"'; } ?>> <small>Yes</small><br />
+				<input type="radio" name="md5" value="no"<?php if($settings['md5'] == 'no') { echo ' checked="checked"'; } ?>> <small>No</small>
+			</td>
+			<td class="help">Use MD5 encryption in id. This is quite an expensive process but good for security.</td>
+		</tr>
+		<tr>
+			<td class="label">Append Name</td>
+			<td class="field">
+				<input type="radio" name="append_name" value="yes"<?php if($settings['append_name'] == 'yes') { echo ' checked="checked"'; } ?>> <small>Yes</small><br />
+				<input type="radio" name="append_name" value="no"<?php if($settings['append_name'] == 'no') { echo ' checked="checked"'; } ?>> <small>No</small>
+			</td>
+			<td class="help">Append download name to id (stops sequence guessing).</td>
 		</tr>
 		<tr>
 			<td></td>

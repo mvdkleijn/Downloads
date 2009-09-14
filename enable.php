@@ -27,6 +27,9 @@
 					INSERT INTO `".TABLE_PREFIX."plugin_settings` (`plugin_id`,`name`,`value`)
 					VALUES
 						('downloads','active','1'),
+						('downloads','options_mode','basic'),
+						('downloads','md5','yes'),
+						('downloads','append_name','yes'),
 						('downloads','core_root','$core_root'),
 						('downloads','download_path',''),
 						('downloads','download_url','')
@@ -47,12 +50,12 @@
 					`description` varchar(1024) default NULL,
 					`downloads` int(11) default '0',
 					`category` int(11) default NULL,
-					`published` enum ('yes', 'no'),
-					`available` enum ('yes', 'no'),
-					`require_login` enum ('yes', 'no'),
-					`require_password` enum ('yes', 'no'),
+					`published` enum ('yes', 'no') default 'yes',
+					`available` enum ('yes', 'no') default 'yes',
+					`require_login` enum ('yes', 'no') default 'no',
+					`require_password` enum ('yes', 'no') default 'no',
 					`password` varchar(128) default NULL,
-					`serve_type` enum ('download', 'browse'),
+					`serve_type` enum ('download', 'browse') default 'browse',
 					`filetype` varchar(16) default NULL,
 					`extension` varchar(11) default NULL,
 					`filesize` varchar(16) default NULL,
