@@ -9,7 +9,17 @@ class DownloadFrontendManager {
 
 	function checkMd5File($id, $settings) {
 		if($settings['append_name'] == 'yes') {
-			// check id:name
+			$sql = "SELECT * FROM ".TABLE_PREFIX."download";
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute();
+			while($download = $stmt->fetchObject()) {
+				$correctId = $download->download_id;
+				$correctName = $download->name;
+				$mdFiveId = md5($correctId . ' ' . $correctName);
+				if($mdFiveId == $id) {
+					return $correctId;
+				}
+			}
 		}
 		else {
 			$sql = "SELECT * FROM ".TABLE_PREFIX."download";
@@ -28,7 +38,7 @@ class DownloadFrontendManager {
 	function serveFile() {
 		$download_id = filter_var($_GET['id'], FILTER_SANITIZE_STRING);
 		$settings = Plugin::getAllSettings('downloads');
-		if($settings['md5'] == 'yes'){
+		if($settings['md5'] == 'yes') {
 			$download_id = self::checkMd5File($download_id, $settings);
 		}
 		$historyManager = new DownloadHistoryManager();
