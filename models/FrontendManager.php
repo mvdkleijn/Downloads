@@ -12,7 +12,16 @@ class DownloadFrontendManager {
 			// check id:name
 		}
 		else {
-			// check id
+			$sql = "SELECT * FROM ".TABLE_PREFIX."download";
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute();
+			while($download = $stmt->fetchObject()) {
+				$correctId = $download->download_id;
+				$mdFiveId = md5($correctId);
+				if($mdFiveId == $id) {
+					return $correctId;
+				}
+			}
 		}
 	}
 
@@ -22,7 +31,6 @@ class DownloadFrontendManager {
 		if($settings['md5'] == 'yes'){
 			$download_id = self::checkMd5File($download_id, $settings);
 		}
-//		eccbc87e4b5ce2fe28308fd9f2a7baf3
 		$historyManager = new DownloadHistoryManager();
 		if($download_id) {
 			$fileManager = new DownloadFileManager();

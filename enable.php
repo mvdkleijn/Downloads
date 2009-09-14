@@ -8,6 +8,7 @@
 	**/
 
 	$core_root = end(explode('/', CORE_ROOT));
+	$server_path = $_SERVER['DOCUMENT_ROOT'] . '/' . $core_root . '/plugins/downloads/download_files/';
 
 	$sql = "
 				SELECT * FROM `".TABLE_PREFIX."plugin_settings` WHERE plugin_id='downloads'
@@ -31,7 +32,7 @@
 						('downloads','md5','yes'),
 						('downloads','append_name','yes'),
 						('downloads','core_root','$core_root'),
-						('downloads','download_path',''),
+						('downloads','download_path','$server_path'),
 						('downloads','download_url','')
 				;";
 	}
