@@ -7,8 +7,11 @@ class DownloadHistoryManager {
 		$this->db = $__CMS_CONN__;
 	}
 
-	function getAllHistory() {
+	function getAllHistory($download_id) {
 		$sql = "SELECT * FROM ".TABLE_PREFIX."download_history";
+		if($download_id) {
+			$sql .= " WHERE download_id='$download_id' ORDER BY date_downloaded DESC";
+		}
 		$stmt = $this->db->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);

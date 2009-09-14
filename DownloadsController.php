@@ -32,7 +32,11 @@ class DownloadsController extends PluginController {
 	}
 
 	public function history($id) {
-		$this->display('downloads/views/backend/history', array('id' => $id));
+		$fileManager = new DownloadFileManager();
+		$fileInfo = $fileManager->getDownloadInfo($id);
+		$historyManager = new DownloadHistoryManager();
+		$fileHistory = $historyManager->getAllHistory($id);
+		$this->display('downloads/views/backend/history', array('id' => $id, 'file' => $fileInfo['0'], 'history' => $fileHistory));
 	}
 
 	public function categories($id) {

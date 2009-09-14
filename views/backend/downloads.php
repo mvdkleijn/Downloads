@@ -20,7 +20,7 @@
 	}
 
 	if(is_numeric($id)) {
-		echo '<p>Added by <a href="'.get_url('user/edit/'.$download['added_by_id'].'').'">'.$download['added_by_name'].'</a> on '.date('dS F, Y', $download['date_added']).'';
+		echo '<p>Added by <a href="'.get_url('user/edit/'.$download['added_by_id'].'').'">'.$download['added_by_name'].'</a> on '.date('dS F, Y', $download['date_added']).'</p>';
 		echo '<p>Would you like to see the <a href="'.get_url('plugin/downloads/history/'.$download['added_by_id'].'').'">history for this file</a>?</p>';
 		if($download['date_publish'] != '0') {
 			$publishDate		= date('Y-m-d', $download['date_publish']);
