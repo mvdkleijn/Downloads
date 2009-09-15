@@ -31,6 +31,7 @@
 						('downloads','options_mode','basic'),
 						('downloads','md5','yes'),
 						('downloads','append_name','yes'),
+						('downloads','setup','no'),
 						('downloads','core_root','$core_root'),
 						('downloads','download_path','$server_path'),
 						('downloads','download_url','')

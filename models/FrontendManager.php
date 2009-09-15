@@ -7,34 +7,6 @@ class DownloadFrontendManager {
 		$this->db = $__CMS_CONN__;
 	}
 
-	function checkMd5File($id, $settings) {
-		if($settings['append_name'] == 'yes') {
-			$sql = "SELECT * FROM ".TABLE_PREFIX."download";
-			$stmt = $this->db->prepare($sql);
-			$stmt->execute();
-			while($download = $stmt->fetchObject()) {
-				$correctId = $download->download_id;
-				$correctName = $download->name;
-				$mdFiveId = md5($correctId . ' ' . $correctName);
-				if($mdFiveId == $id) {
-					return $correctId;
-				}
-			}
-		}
-		else {
-			$sql = "SELECT * FROM ".TABLE_PREFIX."download";
-			$stmt = $this->db->prepare($sql);
-			$stmt->execute();
-			while($download = $stmt->fetchObject()) {
-				$correctId = $download->download_id;
-				$mdFiveId = md5($correctId);
-				if($mdFiveId == $id) {
-					return $correctId;
-				}
-			}
-		}
-	}
-
 	function serveFile() {
 		$download_id = filter_var($_GET['id'], FILTER_SANITIZE_STRING);
 		$settings = Plugin::getAllSettings('downloads');
@@ -73,6 +45,34 @@ class DownloadFrontendManager {
 				}
 				else {
 					$addHistory = $historyManager->addToHistory($fileInfo, 'fail');
+				}
+			}
+		}
+	}
+
+	function checkMd5File($id, $settings) {
+		if($settings['append_name'] == 'yes') {
+			$sql = "SELECT * FROM ".TABLE_PREFIX."download";
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute();
+			while($download = $stmt->fetchObject()) {
+				$correctId = $download->download_id;
+				$correctName = $download->name;
+				$mdFiveId = md5($correctId . ' ' . $correctName);
+				if($mdFiveId == $id) {
+					return $correctId;
+				}
+			}
+		}
+		else {
+			$sql = "SELECT * FROM ".TABLE_PREFIX."download";
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute();
+			while($download = $stmt->fetchObject()) {
+				$correctId = $download->download_id;
+				$mdFiveId = md5($correctId);
+				if($mdFiveId == $id) {
+					return $correctId;
 				}
 			}
 		}

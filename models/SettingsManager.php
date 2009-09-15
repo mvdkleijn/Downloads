@@ -19,4 +19,14 @@ class DownloadSettingsManager {
 		}
 	}
 
+	function dismissSetupMessage() {
+		$sql = "UPDATE ".TABLE_PREFIX."plugin_settings
+				SET value='yes'
+				WHERE plugin_id='downloads'
+				AND name = 'setup'
+				";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+	}
+
 }

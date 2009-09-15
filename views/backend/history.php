@@ -7,25 +7,23 @@
 	}
 	else {
 		echo '<h3>Viewing History for '.$file['name'].'</h3>';
-	}
 
-	$count = 0;
-	$tableRows = '';
-	foreach($history as $item) {
-		if($item['status'] == 'success') {
-			$count = $count + 1;
+		$count = 0;
+		$tableRows = '';
+		foreach($history as $item) {
+			if($item['status'] == 'success') {
+				$count = $count + 1;
+			}
+			if($item['user_id'] != '0') {
+				$profileLink = ' <a href="'.get_url('user/edit/'.$item['user_id'].'').'">[View Profile]</a>';
+			}
+			$tableRows .= '
+			<tr>
+				<td>'.$item['download_name'].'</td>
+				<td>'.$item['user_name']. $profileLink .'</td>
+				<td>'.$item['date_downloaded'].'</td>
+			</tr>';
 		}
-		if($item['user_id'] != '0') {
-			$profileLink = ' <a href="'.get_url('user/edit/'.$item['user_id'].'').'">[View Profile]</a>';
-		}
-		$tableRows .= '
-		<tr>
-			<td>'.$item['download_name'].'</td>
-			<td>'.$item['user_name']. $profileLink .'</td>
-			<td>'.$item['date_downloaded'].'</td>
-		</tr>';
-	}
-
 ?>
 
 <p>Added by <a href="<?php echo get_url('user/edit/'.$file['added_by_id'].''); ?>"><?php echo $file['added_by_name']; ?></a> on <?php echo date('dS F, Y', $file['date_added']); ?></p>
@@ -43,3 +41,7 @@
 <?php echo $tableRows; ?>
 	</tbody>
 </table>
+<?php
+	}
+
+?>

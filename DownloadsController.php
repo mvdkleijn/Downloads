@@ -13,6 +13,13 @@ class DownloadsController extends PluginController {
 		$this->display('downloads/views/backend/dashboard', array('downloads' => $downloads));
 	}
 
+	public function setup() {
+		$settingsManager = new DownloadSettingsManager();
+		$editSettings = $settingsManager->dismissSetupMessage();
+		Flash::set('success', __('This message has been dismissed.'));
+		redirect(get_url('plugin/downloads'));	
+	}
+
 	public function settings($id) {
 		if($id == 'update') {
 			$settingsManager = new DownloadSettingsManager();
