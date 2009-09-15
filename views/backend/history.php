@@ -10,10 +10,14 @@
 	else {
 		echo '<h3>Viewing History for '.$file['name'].'</h3>';
 
+		$now = time();
+		$todaysDom = date('d', $now);
 		$count = 0;
 		$failCount = 0;
 		$tableRows = '';
 		$graphRows = '';
+		$days = array();
+		$months = array();
 		foreach($history as $item) {
 			$status = $item['status'];
 			if($item['status'] == 'success') {
@@ -32,7 +36,20 @@
 				<td>'.$item['user_name']. $profileLink .'</td>
 				<td>'.$item['date_downloaded'].'</td>
 			</tr>';
+			$actualDate = explode('-', $item['date_downloaded']);
+			$year = $actualDate['0'];
+			$originalMonth = $actualDate['1'];
+			$originalDay = explode(' ', $actualDate['2']);
+			$originalDay = $originalDay['0'];
+			$day = date('l', mktime('0', '0', '0', $originalMonth, $originalDay, $year));
+			$month = date('M', mktime('0', '0', '0', $originalMonth, $originalDay, $year));
+			$days[] .= $day;
+			$months[] .= $month;
 		}
+		$days = array_count_values($days);
+		$maxDay = max($days);
+		$months = array_count_values($months);
+		$maxMonth = max($months);
 ?>
 
 
@@ -41,13 +58,22 @@
 <p>Added by <a href="<?php echo get_url('user/edit/'.$file['added_by_id'].''); ?>"><?php echo $file['added_by_name']; ?></a> on <?php echo date('dS F, Y', $file['date_added']); ?></p>
 <p>This file has been downloaded <strong><?php echo $count; ?> times</strong></p>
 
-<h4>Request Results:</h4>
-<div id="success_fail"></div>
+<p>&nbsp;</p>
+
+<h4>Request Results</h4>
+<div class="graph" id="success_fail"></div>
+
+<h4>Most Popular Days for this download</h4>
+<div class="graph" id="downloads_by_day"></div>
+
+<h4>Download Popularity by Month</h4>
+<div class="graph" id="downloads_by_month"></div>
  	
+ 
 <script type="text/javascript">
-    var so = new SWFObject("<?php echo URL_PUBLIC . $settings['core_root'] .'/plugins/downloads/assets/flash/open-flash-chart.swf'; ?>", "ofc", "300", "200", "9", "#FFFFFF");
+    var so = new SWFObject("<?php echo URL_PUBLIC . $settings['core_root'] .'/plugins/downloads/assets/flash/open-flash-chart.swf'; ?>", "ofc", "600", "200", "9", "#FFFFFF");
 		so.addVariable("variables","true"); 
-		so.addVariable("pie","60,#E4F0DB,#000000,1,,1");
+		so.addVariable("pie","40,#E4F0DB,#000000,0, ,0");
 		so.addVariable("values","<?php echo $failCount; ?>,<?php echo $count; ?>");
 		so.addVariable("pie_labels","Failed Requests,Successful Requests");
 		so.addVariable("bg_colour","#ffffff");
@@ -56,60 +82,34 @@
 		so.write("success_fail");
 </script>
 
-<h4>Last 7 Days:</h4>
-
-<div id="last_seven_days"></div>
- 	
 <script type="text/javascript">
-    var my_chart = new SWFObject("<?php echo URL_PUBLIC . $settings['core_root'] .'/plugins/downloads/assets/flash/open-flash-chart.swf'; ?>", "ofc", "600", "200", "9", "#FFFFFF");
-		my_chart.addVariable("variables","true");
-		my_chart.addVariable("bar","20,0x649b2c, ,10");
-		my_chart.addVariable("values","29,62,58,27,21,24,45");
-		my_chart.addVariable("x_labels","Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday");
-		my_chart.addVariable("y_max","100");
-		my_chart.addVariable("bg_colour","#FFFFFF");
-		my_chart.addVariable("x_axis_colour","#FFFFFF");
-		my_chart.addVariable("y_axis_colour","#FFFFFF");
-		my_chart.addVariable("x_grid_colour","#FFFFFF");
-		my_chart.addVariable("y_grid_colour","#FFFFFF");
-		my_chart.write("last_seven_days");
+    var downloads_by_day = new SWFObject("<?php echo URL_PUBLIC . $settings['core_root'] .'/plugins/downloads/assets/flash/open-flash-chart.swf'; ?>", "ofc", "600", "200", "9", "#FFFFFF");
+		downloads_by_day.addVariable("variables","true");
+		downloads_by_day.addVariable("bar","40,0x649b2c, ,1");
+		downloads_by_day.addVariable("values","<?php echo '0' . $days['Monday'] .',0'.$days['Tuesday'] .',0'.$days['Wednesday'] .',0'.$days['Thursday'] .',0'.$days['Friday'] .',0'.$days['Saturday'] .',0'.$days['Sunday']; ?>");
+		downloads_by_day.addVariable("x_labels","Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday");
+		downloads_by_day.addVariable("y_max","<?php echo $maxDay ?>");
+		downloads_by_day.addVariable("bg_colour","#FFFFFF");
+		downloads_by_day.addVariable("x_axis_colour","#FFFFFF");
+		downloads_by_day.addVariable("y_axis_colour","#FFFFFF");
+		downloads_by_day.addVariable("x_grid_colour","#FFFFFF");
+		downloads_by_day.addVariable("y_grid_colour","#FFFFFF");
+		downloads_by_day.write("downloads_by_day");
 </script>
-
-<h4>Downloads by Day:</h4>
-<div id="downloads_by_day"></div>
  	
 <script type="text/javascript">
-    var my_chart = new SWFObject("<?php echo URL_PUBLIC . $settings['core_root'] .'/plugins/downloads/assets/flash/open-flash-chart.swf'; ?>", "ofc", "600", "200", "9", "#FFFFFF");
-		my_chart.addVariable("variables","true");
-		my_chart.addVariable("bar","20,0x649b2c, ,10");
-		my_chart.addVariable("values","29,62,58,27,21,24,45");
-		my_chart.addVariable("x_labels","Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday");
-		my_chart.addVariable("y_max","100");
-		my_chart.addVariable("bg_colour","#FFFFFF");
-		my_chart.addVariable("x_axis_colour","#FFFFFF");
-		my_chart.addVariable("y_axis_colour","#FFFFFF");
-		my_chart.addVariable("x_grid_colour","#FFFFFF");
-		my_chart.addVariable("y_grid_colour","#FFFFFF");
-		my_chart.write("downloads_by_day");
-</script>
-
-<h4>Downloads by Month:</h4>
-
-<div id="downloads_by_month"></div>
- 	
-<script type="text/javascript">
-    var my_chart = new SWFObject("<?php echo URL_PUBLIC . $settings['core_root'] .'/plugins/downloads/assets/flash/open-flash-chart.swf'; ?>", "ofc", "600", "200", "9", "#FFFFFF");
-		my_chart.addVariable("variables","true");
-		my_chart.addVariable("bar","20,0x649b2c, ,10");
-		my_chart.addVariable("values","29,62,58,27,21,24,45");
-		my_chart.addVariable("x_labels","Jan,Feb,Mar,Apr,May,June,July,Aug,Sep,Oct,Nov,Dec");
-		my_chart.addVariable("y_max","100");
-		my_chart.addVariable("bg_colour","#FFFFFF");
-		my_chart.addVariable("x_axis_colour","#FFFFFF");
-		my_chart.addVariable("y_axis_colour","#FFFFFF");
-		my_chart.addVariable("x_grid_colour","#FFFFFF");
-		my_chart.addVariable("y_grid_colour","#FFFFFF");
-		my_chart.write("downloads_by_month");
+    var downloads_by_month = new SWFObject("<?php echo URL_PUBLIC . $settings['core_root'] .'/plugins/downloads/assets/flash/open-flash-chart.swf'; ?>", "ofc", "600", "200", "9", "#FFFFFF");
+		downloads_by_month.addVariable("variables","true");
+		downloads_by_month.addVariable("bar","40,0x649b2c, ,1");
+		downloads_by_month.addVariable("values","<?php  echo '0'.$months['Jan'] .',0'. $months['Feb'] .',0'. $months['Mar'] .',0'. $months['Apr'] .',0'. $months['May'] .',0' .$months['Jun'] .',0'.$months['Jul'] .',0'. $months['Aug'] .',0'. $months['Sep'] .',0'. $months['Oct'] .',0'. $months['Nov'] .',0'. $months['Dec']; ?>");
+		downloads_by_month.addVariable("x_labels","Jan,Feb,Mar,Apr,May,June,July,Aug,Sep,Oct,Nov,Dec");
+		downloads_by_month.addVariable("y_max","<?php echo $maxMonth; ?>");
+		downloads_by_month.addVariable("bg_colour","#FFFFFF");
+		downloads_by_month.addVariable("x_axis_colour","#FFFFFF");
+		downloads_by_month.addVariable("y_axis_colour","#FFFFFF");
+		downloads_by_month.addVariable("x_grid_colour","#FFFFFF");
+		downloads_by_month.addVariable("y_grid_colour","#FFFFFF");
+		downloads_by_month.write("downloads_by_month");
 </script>
 
 
