@@ -4,6 +4,7 @@
 		'id'          => 'downloads',
 		'title'       => 'Download Manager',
 		'author'      => 'Andrew Waters',
+		'type'        => 'both',
 		'version'     => '1.0'
 	));
 
@@ -30,4 +31,7 @@
 				$serveFile = $frontendManager->serveFile();
 			}
 		}
+	}
+
+	function listDownloads($displayCategory, $displayDescription, $displaySecurity, $download_id) {
 	}

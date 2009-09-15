@@ -28,7 +28,7 @@
 
 <p>Added by <a href="<?php echo get_url('user/edit/'.$file['added_by_id'].''); ?>"><?php echo $file['added_by_name']; ?></a> on <?php echo date('dS F, Y', $file['date_added']); ?></p>
 
-<p>This file has been downloaded <strong><?php echo $count; ?> time<?php if($count > 0) { echo 's'; } ?></strong></p>
+<p>This file has been downloaded <strong><?php echo $count; ?> times</strong></p>
 
 <p>The file name is shown so you can see what it was when the user downloaded it. If you've edited the name since then, you will see the old name here.</p>
 <table class="index">
@@ -43,5 +43,4 @@
 </table>
 <?php
 	}
-
 ?>

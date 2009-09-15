@@ -7,6 +7,10 @@ class DownloadFrontendManager {
 		$this->db = $__CMS_CONN__;
 	}
 
+	function displayDownloads($displayCategory, $displayDescription, $displaySecurity, $download_id) {
+		return '1';
+	}
+
 	function serveFile() {
 		$download_id = filter_var($_GET['id'], FILTER_SANITIZE_STRING);
 		$settings = Plugin::getAllSettings('downloads');
