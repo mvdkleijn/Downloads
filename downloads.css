@@ -40,3 +40,55 @@ body#body_plugin_downloads #setup a:active {
 	color: #fefffe;
 	background-color: #ba1b0d;
 }
+
+body#body_plugin_downloads .verticalBarGraph {
+	border-bottom: 1px solid #FFF;
+	height: 200px;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+	
+body#body_plugin_downloads .verticalBarGraph li {
+	border: 1px solid #372f29;
+	border-bottom: none;
+	bottom: 0;
+	list-style:none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	text-align: center;
+	width: 39px;
+}
+
+body#body_plugin_downloads .barGraph {
+	border-bottom-color: #372f29;
+	border-bottom: 3px solid;
+	font: 9px Helvetica, Geneva, sans-serif;
+	height: 200px;
+	margin: 1em 0;
+	padding: 0;
+	position: relative;
+}
+	
+body#body_plugin_downloads .barGraph li {
+	background-color: #666;
+	border: 1px solid #372f29;
+	border-bottom: none;
+	bottom: 0; 
+	color: #FFF;
+	margin: 0; 
+	padding: 0 0 0 0;
+	position: absolute;
+	list-style: none;
+	text-align: center;
+	width: 39px;
+}
+	
+body#body_plugin_downloads .barGraph li.success {
+	background-color: #649b2c;
+}
+
+body#body_plugin_downloads .barGraph li.fail {
+	background-color: #c92e0c;
+}
