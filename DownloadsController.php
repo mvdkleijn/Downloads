@@ -10,7 +10,9 @@ class DownloadsController extends PluginController {
 	public function index() {
 		$downloadManager = new DownloadFileManager();
 		$downloads = $downloadManager->getAllDownloads();
-		$this->display('downloads/views/backend/dashboard', array('downloads' => $downloads));
+		$categoryManager = new DownloadCategoryManager();
+		$categories = $categoryManager->getCategories();
+		$this->display('downloads/views/backend/dashboard', array('downloads' => $downloads, 'categories' => $categories));
 	}
 
 	public function setup() {
@@ -153,4 +155,12 @@ class DownloadsController extends PluginController {
 		Flash::set('success', __('This download has been updated'));
 		redirect(get_url('plugin/downloads'));
 	}
+
+	function categoryUpdate($id) {
+		$downloadManager = new DownloadFileManager();
+		$downloadUpdate = $downloadManager->categoryUpdate($id);
+		Flash::set('success', __('This download has been updated'));
+		redirect(get_url('plugin/downloads'));
+	}
+
 }

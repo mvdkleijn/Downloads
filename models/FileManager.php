@@ -22,6 +22,15 @@ class DownloadFileManager {
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	function categoryUpdate($id) {
+		$sql = "UPDATE ".TABLE_PREFIX."download SET
+					category='".filter_var($_POST['category_id'], FILTER_SANITIZE_STRING)."'
+				WHERE download_id='".$id."'
+		";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+	}
+
 	function addFile($_POST) {
 		AuthUser::load();
 		$user_id = AuthUser::getRecord()->id;
