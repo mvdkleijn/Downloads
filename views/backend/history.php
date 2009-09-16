@@ -1,7 +1,5 @@
 <h1>Download History</h1>
 
-<p class="back-button"><span class="back-button"><a href="javascript: history.go(-1)">Back</a></span></p>
-
 <?php
 
 	$settings = Plugin::getAllSettings('downloads');
@@ -30,6 +28,9 @@
 			}
 			if($item['user_id'] != '0') {
 				$profileLink = ' <a href="'.get_url('user/edit/'.$item['user_id'].'').'">[View Profile]</a>';
+			}
+			elseif($item['user_id'] == '0') {
+				$profileLink = $item['user_ip'];
 			}
 			$tableRows .= '
 			<tr class="'.odd_even().'">
@@ -62,16 +63,37 @@
 
 <p>&nbsp;</p>
 
-<h4>Request Results</h4>
-<div class="graph" id="success_fail"></div>
+<p class="downloads-button"><span class="downloads-button"><a href="#" onclick="toggle_popup('request-results-popup', 'dummy_input'); return false;">View Request Chart</a></span> 
+<span class="downloads-button"><a href="#" onclick="toggle_popup('downloads-by-month-popup', 'dummy_input'); return false;">Downloads by Month</a></span> 
+<span class="downloads-button"><a href="#" onclick="toggle_popup('downloads-by-day-popup', 'dummy_input'); return false;">Downloads by Day</a></span></p>
 
-<h4>Most Popular Days for this download</h4>
-<div class="graph" id="downloads_by_day"></div>
+<div class="popup" id="request-results-popup" style="display:none;">
+	<h4 id="dummy_input">Request Results</h4>
+	<p>This graph shows you the ratio of successful:failed file requests.</p>
+	<div class="graph" id="success_fail"></div>
+	<p>A file request will fail if:</p>
+	<ul>
+		<li>It requires login and the user is not logged in</li>
+		<li>It requires a password which was not submitted, or was incorrect</li>
+		<li>The file is either unavailable or is requested outside of permitted publishing times</li>
+	</ul>
+	<p class="downloads-button"><span class="downloads-button"><a href="#" onclick="Element.hide('request-results-popup'); return false;">Close</a></span></p>
+</div>
 
-<h4>Download Popularity by Month</h4>
-<div class="graph" id="downloads_by_month"></div>
- 	
- 
+<div class="popup" id="downloads-by-month-popup" style="display:none;">
+	<h4 id="dummy_input">Download Popularity by Month</h4>
+	<p>This graph shows you the number of requests/month for the lifetime of the download.</p>
+	<div class="graph" id="downloads_by_month"></div>
+	<p class="downloads-button"><span class="downloads-button"><a href="#" onclick="Element.hide('downloads-by-month-popup'); return false;">Close</a></span></p>
+</div>
+
+<div class="popup" id="downloads-by-day-popup" style="display:none;">
+	<h4 id="dummy_input">Most Popular Days for this downloads</h4>
+	<p>This graph shows you the number of requests/day for the lifetime of the download.</p>
+	<div class="graph" id="downloads_by_day"></div>
+	<p class="downloads-button"><span class="downloads-button"><a href="#" onclick="Element.hide('downloads-by-day-popup'); return false;">Close</a></span></p>
+</div>
+
 <script type="text/javascript">
     var so = new SWFObject("<?php echo URL_PUBLIC . $settings['core_root'] .'/plugins/downloads/assets/flash/open-flash-chart.swf'; ?>", "ofc", "600", "200", "9", "#FFFFFF");
 		so.addVariable("variables","true"); 
@@ -114,9 +136,9 @@
 		downloads_by_month.write("downloads_by_month");
 </script>
 
+<p>&nbsp;</p>
 
-
-<p>The file name is shown so you can see what it was when the user downloaded it. If you've edited the name since then, you will see the old name here.</p>
+<h4>Table of Activity:</h4>
 
 <table class="index">
 	<thead>
@@ -132,3 +154,5 @@
 <?php
 	}
 ?>
+
+<p class="downloads-button"><span class="downloads-button"><a href="javascript: history.go(-1)">Back</a></span></p>
