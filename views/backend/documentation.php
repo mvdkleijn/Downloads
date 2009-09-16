@@ -18,7 +18,10 @@
 <p>You can use this function out of the box to display all downloads and categories in a big list:</p>
 <pre>listDownloads();</pre>
 <p>Or you can pass along the following variables:</p>
-<pre>listDownloads(id[INT], displayCategoryName[BOOLEAN], displayCategoryDescription[BOOLEAN], displayDownloadDescription[BOOLEAN]);</pre>
+<pre>listDownloads(downloads_id[INT], category_id[INT], displayCategoryName[BOOLEAN], displayCategoryDescription[BOOLEAN], displayDownloadDescription[BOOLEAN]);</pre>
 <p>So this code:</p>
-<pre>listDownloads('1', FALSE, FALSE, TRUE);</pre>
+<pre>listDownloads('1', '', FALSE, FALSE, TRUE);</pre>
 <p>Will display a link to the download which has an ID of '1'. It won't show the Category or describe the category that it belongs to, but it will show the description you have on file for the download</p>
+<p>And this:</p>
+<pre>listDownloads('', '2', TRUE, TRUE, FALSE);</pre>
+<p>Will show all downloads in the Category with an id of '2'. It won't show any description of the file but will provide a header and description of the category.</p>
