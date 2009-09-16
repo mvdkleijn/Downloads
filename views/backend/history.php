@@ -1,5 +1,7 @@
 <h1>Download History</h1>
 
+<p class="back-button"><span class="back-button"><a href="javascript: history.go(-1)">Back</a></span></p>
+
 <?php
 
 	$settings = Plugin::getAllSettings('downloads');

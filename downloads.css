@@ -45,3 +45,20 @@ body#body_plugin_downloads .graph {
 	padding-top: 1em;
 	padding-bottom: 5em;
 }
+
+body#body_plugin_downloads span.back-button {
+	padding: 1em;
+	color: white;
+	background-color: #c92f0d;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+body#body_plugin_downloads .back-button a {
+	color: white;
+}
+
+body#body_plugin_downloads p.back-button {
+	padding-top: 1em;
+	padding-bottom: 1.5em;
+}
