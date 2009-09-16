@@ -15,12 +15,20 @@
 			<td class="help">Would you like to run this plugin in basic or advanced mode? Advanced offers you publishing customisation, password and login protection.</td>
 		</tr>
 		<tr>
+			<td class="label">Display Documentation in Sidebar</td>
+			<td class="field">
+				<input type="radio" name="documentation_link" value="yes"<?php if($settings['documentation_link'] == 'yes') { echo ' checked="checked"'; } ?>> <small>Yes</small><br />
+				<input type="radio" name="documentation_link" value="no"<?php if($settings['documentation_link'] == 'no') { echo ' checked="checked"'; } ?>> <small>No</small>
+			</td>
+			<td class="help">Do you want the documentation link to appear in the sidebar navigation?</td>
+		</tr>
+		<tr>
 			<td class="label">New Windows</td>
 			<td class="field">
 				<input type="radio" name="open_new_windows" value="yes"<?php if($settings['open_new_windows'] == 'yes') { echo ' checked="checked"'; } ?>> <small>Yes</small><br />
 				<input type="radio" name="open_new_windows" value="no"<?php if($settings['open_new_windows'] == 'no') { echo ' checked="checked"'; } ?>> <small>No</small>
 			</td>
-			<td class="help">Would you like download links to open in new windows?</td>
+			<td class="help">Would you like downloads to open up in new windows? (Applies to Front End only)</td>
 		</tr>
 		<tr>
 			<td class="help" colspan="3">Environment</td>

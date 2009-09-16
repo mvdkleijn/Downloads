@@ -30,6 +30,7 @@
 						('downloads','active','1'),
 						('downloads','options_mode','basic'),
 						('downloads','open_new_windows','yes'),
+						('downloads','documentation_link','yes'),
 						('downloads','md5','yes'),
 						('downloads','append_name','yes'),
 						('downloads','setup','no'),

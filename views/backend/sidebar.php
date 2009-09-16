@@ -8,5 +8,8 @@ if (Dispatcher::getAction() != 'view'):
 <p class="button"><a href="<?php echo get_url('plugin/downloads/categories'); ?>"><img src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-categories.png" align="middle" alt="Download Categories" /> Categories</a></p>
 <p class="button"><a href="<?php echo get_url('plugin/downloads/categories/add'); ?>"><img src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-categories-add.png" align="middle" alt="Add a Download Category" /> Add Category</a></p>
 <p class="button"><a href="<?php echo get_url('plugin/downloads/settings'); ?>"><img src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-settings.png" align="middle" alt="Download Settings" /> Settings</a></p>
+<?php if($settings['documentation_link'] == 'yes') { ?>
 <p class="button"><a href="<?php echo get_url('plugin/downloads/documentation'); ?>"><img src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-documentation.png" align="middle" alt="Download Documentation" /> Documentation</a></p>
-<?php endif; ?>
+<?php
+	}
+endif; ?>
