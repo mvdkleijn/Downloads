@@ -15,6 +15,14 @@
 			<td class="help">Would you like to run this plugin in basic or advanced mode? Advanced offers you publishing customisation, password and login protection.</td>
 		</tr>
 		<tr>
+			<td class="label">New Windows</td>
+			<td class="field">
+				<input type="radio" name="open_new_windows" value="yes"<?php if($settings['open_new_windows'] == 'yes') { echo ' checked="checked"'; } ?>> <small>Yes</small><br />
+				<input type="radio" name="open_new_windows" value="no"<?php if($settings['open_new_windows'] == 'no') { echo ' checked="checked"'; } ?>> <small>No</small>
+			</td>
+			<td class="help">Would you like download links to open in new windows?</td>
+		</tr>
+		<tr>
 			<td class="help" colspan="3">Environment</td>
 		</tr>
 		<tr>
