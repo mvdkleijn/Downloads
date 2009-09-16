@@ -220,4 +220,16 @@ class DownloadFileManager {
 		$stmt->execute();
 	}
 
+	function available($id) {
+		$currentStatus = self::getDownloadInfo($id);
+		$currentStatus = $currentStatus['0']['available'];
+		if($currentStatus == 'yes') { $newStatus = 'no'; } else { $newStatus = 'yes'; }
+		$sql = "UPDATE ".TABLE_PREFIX."download SET
+					available='".$newStatus."'
+				WHERE download_id='".$id."'
+		";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+	}
+
 }

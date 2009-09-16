@@ -146,4 +146,11 @@ class DownloadsController extends PluginController {
 		Flash::set('success', __('This download has been updated'));
 		redirect(get_url('plugin/downloads'));
 	}
+
+	function available($id) {
+		$downloadManager = new DownloadFileManager();
+		$downloadInfo = $downloadManager->available($id);
+		Flash::set('success', __('This download has been updated'));
+		redirect(get_url('plugin/downloads'));
+	}
 }
