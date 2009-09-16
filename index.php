@@ -32,7 +32,7 @@
 		}
 	}
 
-	function listDownloads($download_id, $category_id, $displayCategoryName, $displayCategoryDescription, $displayDownloadDescription) {
+	function listDownloads($download_id, $category_id, $displayCategoryName=TRUE, $displayCategoryDescription=TRUE, $displayDownloadDescription=TRUE) {
 		$frontendManager = new DownloadFrontendManager();
 		$display = $frontendManager->displayDownloads($download_id, $category_id);
 		include('views/frontend/listDownloads.php');

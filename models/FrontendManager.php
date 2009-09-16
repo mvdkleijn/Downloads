@@ -10,10 +10,8 @@ class DownloadFrontendManager {
 	function displayDownloads($download_id, $category_id) {
 		$fileManager = new DownloadFileManager();
 		$downloads = $fileManager->getDownloadInfo($download_id);
-		if($category_id != '') {
-			$categoryManager = new DownloadCategoryManager();
-			$categories = $categoryManager->getCategories($category_id);
-		}
+		$categoryManager = new DownloadCategoryManager();
+		$categories = $categoryManager->getCategories($category_id);
 		$lists = array('categories'=>$categories, 'downloads'=>$downloads);
 		return $lists;
 	}
