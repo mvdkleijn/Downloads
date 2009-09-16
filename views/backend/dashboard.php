@@ -63,7 +63,13 @@
 			</td>
 			<td><?php echo $download['downloads'] ?></td>
 			<td><a href="<?php echo get_url('plugin/downloads/publish/'.$download['download_id'].''); ?>"><img src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-published-<?php echo $download['published']; ?>.png" /></a></td>
-			<td><a href="<?php echo get_url('plugin/downloads/available/'.$download['download_id'].''); ?>"><img src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-available-<?php echo $download['available']; ?>.png" /></a></td>
+			<td><a href="<?php echo get_url('plugin/downloads/available/'.$download['download_id'].''); ?>"><img src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-available-<?php echo $download['available']; ?>.png" /></a><?php
+			
+				if($download['date_publish'] != '0' || $download['date_unpublish'] != '0') {
+					echo ' <img class="download-help-hover" src="../'.$settings['core_root'].'/plugins/downloads/images/download-clock.png" title="Published: '.date('dS M, Y \a\t G:i:s', $download['date_publish']).'   Unpublished: '.date('dS M, Y \a\t G:i:s', $download['date_unpublish']).'" />';
+				}
+			
+			?></td>
 			<td><?php echo number_format((($download['filesize'] / 1024) / 1024), 2) ?><small>MB</small></td>
 			<td>
 				<a href="<?php echo get_url('plugin/downloads/history/'); echo $download['download_id']; ?>"><img src="../<?php echo $settings['core_root']; ?>/plugins/downloads/images/download-history-small.png" align="middle" alt="Download History" /></a>  
