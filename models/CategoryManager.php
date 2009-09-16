@@ -31,7 +31,8 @@ class DownloadCategoryManager {
 				VALUES(
 					'',
 					'".filter_var($_POST['name'], FILTER_SANITIZE_STRING)."',
-					'".filter_var($_POST['description'], FILTER_SANITIZE_STRING)."'
+					'".filter_var($_POST['description'], FILTER_SANITIZE_STRING)."',
+					'".filter_var($_POST['published'], FILTER_SANITIZE_STRING)."'
 				)";
 		$stmt = $this->db->prepare($sql);
 		$stmt->execute();
@@ -43,7 +44,8 @@ class DownloadCategoryManager {
 	function editCategory() {
 		$sql = "UPDATE ".TABLE_PREFIX."download_categories
 				SET name='".filter_var($_POST['name'], FILTER_SANITIZE_STRING)."',
-					description='".filter_var($_POST['description'], FILTER_SANITIZE_STRING)."'
+					description='".filter_var($_POST['description'], FILTER_SANITIZE_STRING)."',
+					published='".filter_var($_POST['published'], FILTER_SANITIZE_STRING)."'
 				WHERE category_id='".filter_var($_POST['id'], FILTER_VALIDATE_INT)."'
 				";
 		$stmt = $this->db->prepare($sql);

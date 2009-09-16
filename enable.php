@@ -77,6 +77,7 @@
 					`category_id` int(11) NOT NULL auto_increment,
 					`name` varchar(128) default NULL,
 					`description` varchar(4096) default NULL,
+					`published` enum ('yes', 'no') default 'yes',
 					PRIMARY KEY (`category_id`)
 				) AUTO_INCREMENT=0
 			";

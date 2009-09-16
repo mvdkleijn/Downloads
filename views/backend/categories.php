@@ -50,6 +50,16 @@
 			<td class="help">This is a description for the category, which may be useful for the frontend. <strong>No HTML please.</strong></td>
 		</tr>
 		<tr>
+			<td class="label">Published</td>
+			<td class="field">
+				<select name="published">
+					<option value="yes"<?php if($category['published'] == 'yes') { echo ' selected="selected"'; } ?>>Yes</option>
+					<option value="no"<?php if($category['published'] == 'no') { echo ' selected="selected"'; } ?>>No</option>
+				</select>
+			</td>
+			<td class="help">Should we publish this category on the frontend? Will only be published if you have added the relevant code to the front.</td>
+		</tr>
+		<tr>
 			<td class="label"></td>
 			<td class="field" colspan="2"><button class="Submit">Update</button> or <a href="<?php echo $url; ?>">cancel changes</a></td>
 		</tr>
