@@ -7,11 +7,11 @@ class DownloadFrontendManager {
 		$this->db = $__CMS_CONN__;
 	}
 
-	function displayDownloads($displayCategory, $displayDescription, $displaySecurity, $displayStats, $download_id) {
+	function displayDownloads($download_id) {
 		$categoryManager = new DownloadCategoryManager();
 		$categories = $categoryManager->getCategories();
 		$fileManager = new DownloadFileManager();
-		$downloads = $fileManager->getDownloadInfo();
+		$downloads = $fileManager->getDownloadInfo($download_id);
 		$lists = array('categories'=>$categories, 'downloads'=>$downloads);
 		return $lists;
 	}

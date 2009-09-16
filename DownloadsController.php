@@ -15,6 +15,10 @@ class DownloadsController extends PluginController {
 		$this->display('downloads/views/backend/dashboard', array('downloads' => $downloads, 'categories' => $categories));
 	}
 
+	public function documentation() {
+		$this->display('downloads/views/backend/documentation');
+	}
+
 	public function setup() {
 		$settingsManager = new DownloadSettingsManager();
 		$editSettings = $settingsManager->dismissSetupMessage();

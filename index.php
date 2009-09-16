@@ -32,8 +32,8 @@
 		}
 	}
 
-	function listDownloads($displayCategory, $displayDescription, $displaySecurity, $download_id) {
+	function listDownloads($download_id, $displayCategoryName, $displayCategoryDescription, $displayDownloadDescription) {
 		$frontendManager = new DownloadFrontendManager();
-		$display = $frontendManager->displayDownloads($displayCategory, $displayDescription, $displaySecurity, $displayStats, $download_id);
+		$display = $frontendManager->displayDownloads($download_id);
 		include('views/frontend/listDownloads.php');
 	}
