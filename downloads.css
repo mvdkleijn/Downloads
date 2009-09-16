@@ -42,11 +42,10 @@ body#body_plugin_downloads #setup a:active {
 }
 
 body#body_plugin_downloads .graph {
-	padding-top: 1em;
-	padding-bottom: 5em;
+	padding: 1.5em;
 }
 
-body#body_plugin_downloads span.back-button {
+body#body_plugin_downloads span.downloads-button {
 	padding: 1em;
 	color: white;
 	background-color: #c92f0d;
@@ -54,11 +53,11 @@ body#body_plugin_downloads span.back-button {
 	-webkit-border-radius: 10px;
 }
 
-body#body_plugin_downloads .back-button a {
+body#body_plugin_downloads .downloads-button a {
 	color: white;
 }
 
-body#body_plugin_downloads p.back-button {
+body#body_plugin_downloads p.downloads-button {
 	padding-top: 1em;
 	padding-bottom: 1.5em;
 }
