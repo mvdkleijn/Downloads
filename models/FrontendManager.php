@@ -7,8 +7,38 @@ class DownloadFrontendManager {
 		$this->db = $__CMS_CONN__;
 	}
 
-	function displayDownloads($displayCategory, $displayDescription, $displaySecurity, $download_id) {
-		return '1';
+	function displayDownloads($displayCategory, $displayDescription, $displaySecurity, $displayStats, $download_id) {
+		$categoryManager = new DownloadCategoryManager();
+		$categories = $categoryManager->getCategories();
+		$fileManager = new DownloadFileManager();
+		$downloads = $fileManager->getDownloadInfo();
+		$lists = array('categories'=>$categories, 'downloads'=>$downloads);
+		return $lists;
+	}
+
+	function createFileLink() {
+		$sql = "SELECT * FROM ".TABLE_PREFIX."page WHERE behavior_id='download_page'";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+		while($pages = $stmt->fetchObject()) {
+			$page_id = $pages->id;
+		}
+		$download_page = Record::findOneFrom('Page','id = '.$page_id.'');
+		$page = Page::findById($download_page->id);
+		return $page;
+	}
+	
+	function createUrlId($download) {
+		$settings = Plugin::getAllSettings('downloads');
+		if($settings['md5'] == 'yes' && $settings['append_name'] == 'yes') {
+			return md5($download['download_id'] . ' ' . $download['name']);
+		}
+		elseif($settings['md5'] == 'yes' && $settings['append_name'] == 'no') {
+			return md5($download['download_id']);
+		}
+		else {
+			return $download['download_id'];
+		}
 	}
 
 	function serveFile() {
@@ -82,6 +112,21 @@ class DownloadFrontendManager {
 		}
 	}
 
+	function isFileDisplayAllowed($fileInfo) {
+		$fileIsAvailable = self::fileisAvailable($fileInfo);
+		$fileIsPublished = self::fileIsPublished($fileInfo);
+		$fileIsWithinPublishedTime = self::fileIsWithinPublishedTime($fileInfo);
+		if(	$fileIsAvailable == 'serve' &&
+			$fileIsWithinPublishedTime == 'serve' &&
+			$fileIsPublished == 'serve'
+			) {
+			return 'display';
+		}
+		else {
+			return 'no';
+		}
+	}
+
 	function isFileServeAllowed($fileInfo) {
 		$fileIsAvailable = self::fileisAvailable($fileInfo);
 		$fileIsWithinPublishedTime = self::fileIsWithinPublishedTime($fileInfo);
@@ -101,6 +146,15 @@ class DownloadFrontendManager {
 
 	function fileIsAvailable($fileInfo) {
 		if($fileInfo['available'] == 'yes') {
+			return 'serve';
+		}
+		else {
+			return 'no';
+		}
+	}
+
+	function fileIsPublished($fileInfo) {
+		if($fileInfo['published'] == 'yes') {
 			return 'serve';
 		}
 		else {

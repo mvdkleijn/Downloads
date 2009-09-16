@@ -17,7 +17,6 @@
 	Plugin::addController('downloads', 'Downloads', 'developer,administrator,editor', TRUE);
 
 	Behavior::add('download_page', '');
-	Behavior::add('download_login', '');
 	Observer::observe('page_found', 'downloads_page_found');
 
 	function downloads_page_found($page) {
@@ -34,4 +33,7 @@
 	}
 
 	function listDownloads($displayCategory, $displayDescription, $displaySecurity, $download_id) {
+		$frontendManager = new DownloadFrontendManager();
+		$display = $frontendManager->displayDownloads($displayCategory, $displayDescription, $displaySecurity, $displayStats, $download_id);
+		include('views/frontend/listDownloads.php');
 	}
