@@ -61,10 +61,10 @@ class DownloadFrontendManager {
 					$fileOnDisk = str_replace('//', '/', $fileOnDisk);
 					header('Content-Type: '.$fileInfo['filetype'].'');
 					if($fileInfo['serve_type'] == 'download') {
-						header('Content-Disposition: attachment; filename="' . $fileInfo['name'] . '"');
+						header('Content-Disposition: attachment; filename="' . $fileInfo['name'] . '.' . $fileInfo['extension'] . '"');
 					}
 					elseif($fileInfo['serve_type'] == 'browse') {
-						header('Content-Disposition: inline; filename="' . $fileInfo['name'] . '"');
+						header('Content-Disposition: inline; filename="' . $fileInfo['name'] . '.' . $fileInfo['extension'] . '"');
 					}
 					header('Content-Length: ' . $fileInfo['filesize']);
 					header('Content-Transfer-Encoding: binary');
